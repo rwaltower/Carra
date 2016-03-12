@@ -109,7 +109,7 @@ public class RemoveUser extends javax.swing.JFrame {
                 if(reply == JOptionPane.YES_OPTION){
                     u.remove();
                     JOptionPane.showMessageDialog(null, user+" Deleted");
-                    gui.save("C:\\Users\\Ayomitunde\\Desktop\\userInfo.ser");
+                    gui.save(GUI.fileLocation);
                 }else{
                     JOptionPane.showMessageDialog(null, "Canceled");
                 }

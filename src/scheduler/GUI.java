@@ -26,11 +26,12 @@ public class GUI extends javax.swing.JFrame {
      * Creates new form GUI
      */
     static HashMap<User, Boolean> userInfo = new HashMap<>();
+    static String fileLocation = "C:\\Users\\Ayomitunde\\Desktop\\userInfo.ser";
     File testLog;
     static boolean logged = false;
     public GUI() throws IOException {
         initComponents();
-        testLog = new File("C:\\Users\\Ayomitunde\\Desktop\\userInfo.ser");
+        testLog = new File(fileLocation);
         Open(testLog);
         if(logged){
             btnLogin.setText("Log Out");
@@ -159,7 +160,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        save("C:\\Users\\Ayomitunde\\Desktop\\userInfo.ser"); // change this to your desktop just for testing
+        save(fileLocation); // change this to your desktop just for testing
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 

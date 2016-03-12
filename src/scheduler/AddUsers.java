@@ -121,7 +121,7 @@ public class AddUsers extends javax.swing.JFrame {
         String password = txtPassword.getText();
         User newUser = new User(username, password);
         GUI.userInfo.put(newUser, false);
-        gui.save("C:\\Users\\Ayomitunde\\Desktop\\userInfo.ser");
+        gui.save(GUI.fileLocation);
         
     }//GEN-LAST:event_btnCreateActionPerformed
 
