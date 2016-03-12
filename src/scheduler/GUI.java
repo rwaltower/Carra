@@ -26,13 +26,13 @@ public class GUI extends javax.swing.JFrame {
      * Creates new form GUI
      */
     static HashMap<User, Boolean> userInfo = new HashMap<>();
-    static String fileLocation = "C:\\Users\\Ayomitunde\\Desktop\\userInfo.ser";
+    
     File testLog;
     static boolean logged = false;
     public GUI() throws IOException {
         initComponents();
-        testLog = new File(fileLocation);
-        Open(testLog);
+        testLog = new File(Serialize.fileLocation);
+        Serialize.Open(testLog);
         if(logged){
             btnLogin.setText("Log Out");
         }else{
@@ -160,19 +160,11 @@ public class GUI extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        save(fileLocation); // change this to your desktop just for testing
+        Serialize.save(Serialize.fileLocation); // change this to your desktop just for testing
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    void Open(File file) throws FileNotFoundException, IOException {
-        try {
-            try (FileInputStream fis = new FileInputStream(file); ObjectInputStream ois = new ObjectInputStream(fis)) {
-                userInfo = (HashMap) ois.readObject();
-                
-            }
-        } catch (IOException | ClassNotFoundException ioe) {
-        }
-    }
+    
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         try {
             // TODO add your handling code here:
@@ -211,16 +203,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     
-    public void save(String path) {
-        try {
-            try (FileOutputStream fileOut = new FileOutputStream(path); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-                out.writeObject(userInfo);
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
     /**
      * @param args the command line arguments
      */

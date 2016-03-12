@@ -121,7 +121,7 @@ public class AddUsers extends javax.swing.JFrame {
         String password = txtPassword.getText();
         User newUser = new User(username, password);
         GUI.userInfo.put(newUser, false);
-        gui.save(GUI.fileLocation);
+        Serialize.save(Serialize.fileLocation);
         
     }//GEN-LAST:event_btnCreateActionPerformed
 

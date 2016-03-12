@@ -20,6 +20,7 @@ public class RemoveUser extends javax.swing.JFrame {
     GUI gui;
     /**
      * Creates new form RemoveUser
+     * @throws java.io.IOException
      */
     public RemoveUser() throws IOException {
         initComponents();
@@ -109,7 +110,7 @@ public class RemoveUser extends javax.swing.JFrame {
                 if(reply == JOptionPane.YES_OPTION){
                     u.remove();
                     JOptionPane.showMessageDialog(null, user+" Deleted");
-                    gui.save(GUI.fileLocation);
+                    Serialize.save(Serialize.fileLocation);
                 }else{
                     JOptionPane.showMessageDialog(null, "Canceled");
                 }
