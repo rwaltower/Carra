@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package scheduler;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Ayomitunde
@@ -14,7 +19,7 @@ public class AddUsers extends javax.swing.JFrame {
      * Creates new form AddUsers
      */
     GUI gui;
-    public AddUsers() {
+    public AddUsers() throws IOException {
         initComponents();
         gui = new GUI();
     }
@@ -114,12 +119,19 @@ public class AddUsers extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-        GUI.userInfo.put(username, password);
+        User newUser = new User(username, password);
+        GUI.userInfo.put(newUser, false);
+        gui.save("C:\\Users\\Ayomitunde\\Desktop\\userInfo.ser");
+        
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        // TODO add your handling code here:
-        new GUI().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            new GUI().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnHomeActionPerformed
 
     /**
@@ -152,7 +164,11 @@ public class AddUsers extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddUsers().setVisible(true);
+                try {
+                    new AddUsers().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

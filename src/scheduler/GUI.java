@@ -5,7 +5,16 @@
  */
 package scheduler;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,9 +25,18 @@ public class GUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
-    static HashMap<String, String> userInfo = new HashMap<>();;
-    public GUI() {
+    static HashMap<User, Boolean> userInfo = new HashMap<>();
+    File testLog;
+    static boolean logged = false;
+    public GUI() throws IOException {
         initComponents();
+        testLog = new File("C:\\Users\\Ayomitunde\\Desktop\\userInfo.ser");
+        Open(testLog);
+        if(logged){
+            btnLogin.setText("Log Out");
+        }else{
+            btnLogin.setText("Log In");
+        }
     }
 
     /**
@@ -31,7 +49,7 @@ public class GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -44,10 +62,9 @@ public class GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Log In");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
@@ -56,15 +73,15 @@ public class GUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(1076, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addContainerGap(1106, Short.MAX_VALUE)
+                .addComponent(btnLogin)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(0, 532, Short.MAX_VALUE))
+                .addComponent(btnLogin)
+                .addGap(0, 546, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
@@ -142,28 +159,67 @@ public class GUI extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        save("C:\\Users\\Ayomitunde\\Desktop\\userInfo.ser"); // change this to your desktop just for testing
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    void Open(File file) throws FileNotFoundException, IOException {
+        try {
+            try (FileInputStream fis = new FileInputStream(file); ObjectInputStream ois = new ObjectInputStream(fis)) {
+                userInfo = (HashMap) ois.readObject();
+                
+            }
+        } catch (IOException | ClassNotFoundException ioe) {
+        }
+    }
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        new AddUsers().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            this.dispose();
+            new AddUsers().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new Logon().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if(!logged){
+            btnLogin.setVisible(false);
+            try {
+                new Logon().setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            // do something
+        }
+        
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new RemoveUser().setVisible(true);
+        try {
+            new RemoveUser().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    
+    public void save(String path) {
+        try {
+            try (FileOutputStream fileOut = new FileOutputStream(path); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(userInfo);
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -193,12 +249,16 @@ public class GUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new GUI().setVisible(true);
+            try {
+                new GUI().setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
