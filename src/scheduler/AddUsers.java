@@ -162,13 +162,11 @@ public class AddUsers extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new AddUsers().setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                new AddUsers().setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(AddUsers.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
