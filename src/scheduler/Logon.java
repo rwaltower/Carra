@@ -5,6 +5,10 @@
  */
 package scheduler;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,8 +20,10 @@ public class Logon extends javax.swing.JFrame {
     /**
      * Creates new form Logon
      */
-    public Logon() {
+    GUI gui;
+    public Logon() throws IOException {
         initComponents();
+        gui = new GUI();
     }
 
     /**
@@ -115,15 +121,23 @@ public class Logon extends javax.swing.JFrame {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         boolean valid = false;
-        for (String user : GUI.userInfo.keySet()) {
-            if (user.equals(username)) {
-                if (GUI.userInfo.get(user).equals(password)) {
+        
+        for(Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();){
+            User user = u.next();
+            if (user.getUsername().equals(username)) {
+                if (user.getPassword().equals(password)) {
                     valid = true;
                     JOptionPane.showMessageDialog(null, "Successful");
-                    new GUI().setVisible(true);
+                    GUI.logged = true;
+                    try {
+                        new GUI().setVisible(true);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Logon.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }
+        
         if(valid == false){
             JOptionPane.showMessageDialog(null, "Could not locate User", "Invalid User", JOptionPane.ERROR_MESSAGE);
         }
@@ -132,7 +146,11 @@ public class Logon extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new GUI().setVisible(true);
+        try {
+            new GUI().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Logon.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -163,9 +181,11 @@ public class Logon extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 new Logon().setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(Logon.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }

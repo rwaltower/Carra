@@ -5,6 +5,10 @@
  */
 package scheduler;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,11 +17,14 @@ import javax.swing.JOptionPane;
  */
 public class RemoveUser extends javax.swing.JFrame {
 
+    GUI gui;
     /**
      * Creates new form RemoveUser
+     * @throws java.io.IOException
      */
-    public RemoveUser() {
+    public RemoveUser() throws IOException {
         initComponents();
+        gui = new GUI();
     }
 
     /**
@@ -33,8 +40,6 @@ public class RemoveUser extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtSearchUser = new javax.swing.JTextField();
         btnSearchUser = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtUserList = new javax.swing.JTextArea();
         btnHome = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -44,16 +49,12 @@ public class RemoveUser extends javax.swing.JFrame {
 
         jLabel1.setText("Search User");
 
-        btnSearchUser.setText("Search User");
+        btnSearchUser.setText("Search/Delete User");
         btnSearchUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchUserActionPerformed(evt);
             }
         });
-
-        txtUserList.setColumns(20);
-        txtUserList.setRows(5);
-        jScrollPane1.setViewportView(txtUserList);
 
         btnHome.setText("Home");
         btnHome.addActionListener(new java.awt.event.ActionListener() {
@@ -67,22 +68,18 @@ public class RemoveUser extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnSearchUser)
-                            .addComponent(lblRmvUser, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                                    .addComponent(txtSearchUser)))))
+                        .addComponent(btnHome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSearchUser))
+                    .addComponent(lblRmvUser, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(btnHome)))
-                .addContainerGap(116, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,12 +91,10 @@ public class RemoveUser extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnSearchUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addComponent(btnHome)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSearchUser)
+                    .addComponent(btnHome))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,12 +103,14 @@ public class RemoveUser extends javax.swing.JFrame {
     private void btnSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchUserActionPerformed
         // TODO add your handling code here:
         String username = txtSearchUser.getText();
-        for(String user : GUI.userInfo.keySet()){
-            if(user.equals(username)){
+        for(Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();){
+            User user = u.next();
+            if(user.getUsername().equals(username)){
                 int reply = JOptionPane.showConfirmDialog(null, "Are you Sure?", "Delete "+user, JOptionPane.YES_NO_CANCEL_OPTION);
                 if(reply == JOptionPane.YES_OPTION){
-                    GUI.userInfo.remove(user);
+                    u.remove();
                     JOptionPane.showMessageDialog(null, user+" Deleted");
+                    Serialize.save(Serialize.fileLocation);
                 }else{
                     JOptionPane.showMessageDialog(null, "Canceled");
                 }
@@ -124,7 +121,11 @@ public class RemoveUser extends javax.swing.JFrame {
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new GUI().setVisible(true);
+        try {
+            new GUI().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(RemoveUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnHomeActionPerformed
 
     /**
@@ -155,9 +156,11 @@ public class RemoveUser extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 new RemoveUser().setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(RemoveUser.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -166,9 +169,7 @@ public class RemoveUser extends javax.swing.JFrame {
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnSearchUser;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblRmvUser;
     private javax.swing.JTextField txtSearchUser;
-    private javax.swing.JTextArea txtUserList;
     // End of variables declaration//GEN-END:variables
 }
