@@ -28,4 +28,8 @@ public class User implements Serializable{
         return password;
     }
     
+    public void setUsername(String username){
+        this.username = username;
+    }
+    
 }
