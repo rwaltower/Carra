@@ -1,0 +1,86 @@
+package simplegui;
+ 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+ 
+public class GUI extends JFrame implements ActionListener {
+     
+    final int WINDOW_WIDTH = 1200;
+    final int WINDOW_HEIGHT = 800;
+    final int CALENDAR_HEIGHT = WINDOW_HEIGHT / 10;
+    final String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday"};
+    DefaultTableModel CalendarTableModel = new DefaultTableModel(days, 5);
+     
+    private JScrollPane SP_calendar;
+    private JTable calendar;
+    private JMenuBar menuBar;
+     
+    public GUI() {
+        initMainPage();
+    } //end constructor
+     
+    private void initMainPage() {
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        buildMenu();
+        buildCalendar();
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    } //end initMainPage()
+     
+    /* constructs a table (the calendar), sets its dimensions, adds it to a 
+     * scrollpane, and adds the scrollpane to the frame
+     */
+    private void buildCalendar() {
+        calendar = new JTable(CalendarTableModel);
+        calendar.setRowHeight(CALENDAR_HEIGHT);
+        SP_calendar = new JScrollPane(calendar);
+        add(SP_calendar, BorderLayout.SOUTH);
+    } //end buildCalendar()
+     
+    private void buildMenu() {
+        menuBar = new JMenuBar();
+         
+        JMenu file = new JMenu("File");
+        JMenuItem exit = new JMenuItem("Exit");
+        exit.setActionCommand("exit");
+        exit.addActionListener(this);
+        file.add(exit);
+         
+        JMenu settings = new JMenu("Settings");
+         
+        menuBar.add(file);
+        menuBar.add(settings);
+         
+        setJMenuBar(menuBar);
+    }
+     
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if ("exit".equals(e.getActionCommand())) {
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }
+    }
+    
+ 
+} //end class GUI
+
+And the main class just looks like this:
+package simplegui;
+ 
+public class SimpleGUI {
+ 
+    public static void main(String[] args) {
+        new GUI();
+    }
+     
+}
