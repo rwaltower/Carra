@@ -5,6 +5,7 @@
  */
 package scheduler;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -19,11 +20,15 @@ public class Logon extends javax.swing.JFrame {
 
     /**
      * Creates new form Logon
+     *
+     * @throws java.io.IOException
      */
-    GUI gui;
+    File testLog;
+
     public Logon() throws IOException {
         initComponents();
-        gui = new GUI();
+        testLog = new File(Serialize.fileLocation);
+        Serialize.Open(testLog);
     }
 
     /**
@@ -41,8 +46,8 @@ public class Logon extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        btnHome = new javax.swing.JButton();
+        chkAutoLogon = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,14 +67,14 @@ public class Logon extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Home");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnHome.setText("Home");
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnHomeActionPerformed(evt);
             }
         });
 
-        jCheckBox1.setText("Auto Logon");
+        chkAutoLogon.setText("Auto Logon");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,7 +86,7 @@ public class Logon extends javax.swing.JFrame {
                 .addGap(136, 136, 136))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox1)
+                    .addComponent(chkAutoLogon)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -92,7 +97,7 @@ public class Logon extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(111, 111, 111)
-                .addComponent(jButton1)
+                .addComponent(btnHome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogin)
                 .addGap(41, 41, 41))
@@ -111,10 +116,10 @@ public class Logon extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(jCheckBox1)
+                .addComponent(chkAutoLogon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnHome)
                     .addComponent(btnLogin))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -127,33 +132,33 @@ public class Logon extends javax.swing.JFrame {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         boolean valid = false;
-        
-        for(Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();){
-            User user = u.next();
-            if (user.getUsername().equals(username)) {
-                if (user.getPassword().equals(password)) {
-                    if (GUI.logged == false) {
-                        valid = true;
-                        user.setLogged();
-                        JOptionPane.showMessageDialog(null, "Successful");
-                        GUI.logged = true;
-                        try {
-                            this.dispose();
-                            new GUI().setVisible(true);
-                        } catch (IOException ex) {
-                            Logger.getLogger(Logon.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+
+        if ("".equals(username) || "".equals(password)) {
+            JOptionPane.showMessageDialog(null, "Please Input a Username and Password", "Input Required", JOptionPane.ERROR_MESSAGE);
+        } else {
+            for (Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();) {
+                User user = u.next();
+                if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                    valid = true;
+                    user.setLogged();
+                    JOptionPane.showMessageDialog(null, "Successful");
+                    GUI.logged = true;
+                    try {
+                        this.dispose();
+                        new GUI().setVisible(true);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Logon.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
+            if (valid == false) {
+                JOptionPane.showMessageDialog(null, "Could not locate User", "Invalid User", JOptionPane.ERROR_MESSAGE);
+            }
         }
-        
-        if(valid == false){
-            JOptionPane.showMessageDialog(null, "Could not locate User", "Invalid User", JOptionPane.ERROR_MESSAGE);
-        }
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         // TODO add your handling code here:
         this.dispose();
         try {
@@ -161,10 +166,9 @@ public class Logon extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Logon.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnHomeActionPerformed
 
-    
-    public static void run(){
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -176,7 +180,7 @@ public class Logon extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Logon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -191,9 +195,9 @@ public class Logon extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHome;
     private javax.swing.JButton btnLogin;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox chkAutoLogon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
