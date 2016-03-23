@@ -8,8 +8,11 @@ package scheduler;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,19 +23,20 @@ public class GUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
+    final String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday"};
+    DefaultTableModel CalendarTableModel = new DefaultTableModel(days, 5);
+    final int CALENDAR_HEIGHT = 63;
     static HashMap<User, Boolean> userInfo = new HashMap<>();
-    
+    User currentUser;
     File testLog;
     static boolean logged = false;
+
     public GUI() throws IOException {
         initComponents();
         testLog = new File(Serialize.fileLocation);
         Serialize.Open(testLog);
-        if(logged){
-            btnLogin.setText("Log Out");
-        }else{
-            btnLogin.setText("Log In");
-        }
+        set();
     }
 
     /**
@@ -48,17 +52,19 @@ public class GUI extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCalendar = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        mnuMainEdit = new javax.swing.JMenu();
+        mnuEdit = new javax.swing.JMenuItem();
+        mnuUser = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         mnuEditUser = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        mnuServerLocation = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,18 +82,25 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        tblCalendar.setModel(CalendarTableModel);
+        tblCalendar.setRowHeight(CALENDAR_HEIGHT);
+        jScrollPane1.setViewportView(tblCalendar);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogin)
-                .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(918, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLogin))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1033, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +109,8 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(btnLogin)
                 .addGap(44, 44, 44)
                 .addComponent(jButton1)
-                .addContainerGap(490, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 255, 255));
@@ -145,15 +159,22 @@ public class GUI extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        mnuMainEdit.setText("Edit");
 
-        jMenuItem2.setText("Edit Password");
-        jMenu2.add(jMenuItem2);
+        mnuEdit.setText("Edit Password");
+        mnuEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEditActionPerformed(evt);
+            }
+        });
+        mnuMainEdit.add(mnuEdit);
 
-        jMenuItem3.setText("Server Location");
-        jMenu2.add(jMenuItem3);
-
-        jMenu3.setText("User");
+        mnuUser.setText("User");
+        mnuUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuUserActionPerformed(evt);
+            }
+        });
 
         jMenuItem5.setText("Add User");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -161,7 +182,7 @@ public class GUI extends javax.swing.JFrame {
                 jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem5);
+        mnuUser.add(jMenuItem5);
 
         mnuEditUser.setText("Edit User");
         mnuEditUser.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +190,7 @@ public class GUI extends javax.swing.JFrame {
                 mnuEditUserActionPerformed(evt);
             }
         });
-        jMenu3.add(mnuEditUser);
+        mnuUser.add(mnuEditUser);
 
         jMenuItem6.setText("Remove User");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -177,11 +198,19 @@ public class GUI extends javax.swing.JFrame {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem6);
+        mnuUser.add(jMenuItem6);
 
-        jMenu2.add(jMenu3);
+        mnuMainEdit.add(mnuUser);
 
-        jMenuBar1.add(jMenu2);
+        mnuServerLocation.setText("Server Location");
+        mnuServerLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuServerLocationActionPerformed(evt);
+            }
+        });
+        mnuMainEdit.add(mnuServerLocation);
+
+        jMenuBar1.add(mnuMainEdit);
 
         setJMenuBar(jMenuBar1);
 
@@ -209,22 +238,40 @@ public class GUI extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    
+
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         this.setVisible(false);
         AddUsers.run();
-        
+
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void set() {
+        if (logged == true) {
+            btnLogin.setText("Log Out");
+            for (Iterator<User> u = userInfo.keySet().iterator(); u.hasNext();) {
+                currentUser = u.next();
+                System.out.println(currentUser.getUsername());
+                if (currentUser.getLogged()) {
+                    if (userInfo.get(currentUser) == false) {
+                        mnuUser.setVisible(false);
+                    }
+                }
+            }
+
+        } else {
+            btnLogin.setText("Log In ");
+            //mnuMainEdit.setVisible(false);
+        }
+    }
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        if(logged == false){
+        if (logged == false) {
             Logon.run();
-        }else{
+        } else {
             System.exit(0);
         }
-        
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -239,8 +286,31 @@ public class GUI extends javax.swing.JFrame {
         EditUser.run();
     }//GEN-LAST:event_mnuEditUserActionPerformed
 
-    
-    
+    private void mnuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEditActionPerformed
+        // TODO add your handling code here:
+        // Edit password here
+        String newPassword = JOptionPane.showInputDialog("Enter new password here");
+        if (logged == true && !"".equals(newPassword)) {
+            for (Iterator<User> u = userInfo.keySet().iterator(); u.hasNext();) {
+                User user = u.next();
+                if (user.equals(currentUser)) {
+                    user.setPassword(newPassword);
+                    userInfo.put(user, userInfo.get(user));
+                    break;
+                }
+            }
+            Serialize.save(Serialize.fileLocation);
+        }
+    }//GEN-LAST:event_mnuEditActionPerformed
+
+    private void mnuUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuUserActionPerformed
+
+    private void mnuServerLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuServerLocationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuServerLocationActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -282,17 +352,19 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem mnuEdit;
     private javax.swing.JMenuItem mnuEditUser;
+    private javax.swing.JMenu mnuMainEdit;
+    private javax.swing.JMenuItem mnuServerLocation;
+    private javax.swing.JMenu mnuUser;
+    private javax.swing.JTable tblCalendar;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,9 +11,10 @@ import java.io.Serializable;
  *
  * @author Ayomitunde
  */
-public class User implements Serializable{
+public class User implements Serializable, Cloneable{
     private String username;
     private String password;
+    private boolean logged;
     
     public User(String user, String pass){
         this.username = user;
@@ -30,6 +31,18 @@ public class User implements Serializable{
     
     public void setUsername(String username){
         this.username = username;
+    }
+    
+    public void setPassword(String pass){
+        this.password = pass;
+    }
+    
+    public void setLogged(){
+        logged = true;
+    }
+    
+    public boolean getLogged(){
+        return logged;
     }
     
 }
