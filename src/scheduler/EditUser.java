@@ -11,7 +11,6 @@ import javax.swing.table.DefaultTableModel;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Ayomitunde
@@ -22,13 +21,17 @@ public class EditUser extends javax.swing.JFrame {
      * Creates new form EditUser
      */
     String header[] = new String[]{"Username", "IsAdmin"};
-    Object [][] data;
-    DefaultTableModel dtm = new DefaultTableModel(0,0);
-    User edit;
+    Object[][] data;
+    static DefaultTableModel dtm = new DefaultTableModel(0, 0);
+    static User edit;
+
     public EditUser() {
         initComponents();
         dtm.setColumnIdentifiers(header);
         tblEditUser.setModel(dtm);
+        SelectionListener listener = new SelectionListener(tblEditUser, this);
+        tblEditUser.getSelectionModel().addListSelectionListener(listener);
+        tblEditUser.getColumnModel().getSelectionModel().addListSelectionListener(listener);
     }
 
     /**
@@ -134,33 +137,42 @@ public class EditUser extends javax.swing.JFrame {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-        //tblEditUser
+        dtm.setRowCount(0);
         String username = txtSearch.getText();
-        for(Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();){
+        for (Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();) {
             User user = u.next();
-            if(user.getUsername().equals(username) ||
-                    user.getUsername().startsWith(String.valueOf(username.charAt(0)))){
-                dtm.addRow(new Object[] {user.getUsername(), GUI.userInfo.get(user)});
+            if (user.getUsername().equals(username)
+                    || user.getUsername().startsWith(String.valueOf(username.charAt(0)))) {
+                dtm.addRow(new Object[]{user.getUsername(), GUI.userInfo.get(user)});
             }
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    public void getUser() {
+        int row = tblEditUser.getSelectedRow();
+        int column = tblEditUser.getSelectedColumn();
+        if (row >= 0 && column >= 0) {
+            Object value = dtm.getValueAt(row, column);
+            for (Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();) {
+                edit = u.next();
+                if (value.equals(edit.getUsername())) {
+                    System.out.println("user is " + edit.getUsername());
+                    break;
+                }
+            }
+        }
+
+    }
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
         int row = tblEditUser.getSelectedRow();
         int column = tblEditUser.getSelectedColumn();
-        Object value = dtm.getValueAt(row, column);
-        for(Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();){
-            User user = u.next();
-            if(value.equals(user)){
-                
-            }
-        }
-        
-        //dtm.setValueAt(dtm.getValueAt(row, column), row, column);
+        Object newvalue = dtm.getValueAt(row, column);
+        edit.setUsername(String.valueOf(newvalue));
+        Serialize.save(Serialize.fileLocation);
     }//GEN-LAST:event_btnEditActionPerformed
 
-    public static void run(){
+    public static void run() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -172,7 +184,7 @@ public class EditUser extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(EditUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */
