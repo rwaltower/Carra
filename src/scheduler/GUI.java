@@ -298,7 +298,7 @@ public class GUI extends javax.swing.JFrame {
         tblCalendar.setRowSelectionAllowed(true);
         tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        for(int i = realYear - 100; i <= realYear+100; i++){
+        for(int i = realYear; i <= realYear+100; i++){
             cmbYear.addItem(String.valueOf(i));
         }
         if (logged == true) {
