@@ -143,7 +143,7 @@ public class EditUser extends javax.swing.JFrame {
             User user = u.next();
             if (user.getUsername().equals(username)
                     || user.getUsername().startsWith(String.valueOf(username.charAt(0)))) {
-                dtm.addRow(new Object[]{user.getUsername(), GUI.userInfo.get(user)});
+                dtm.addRow(new Object[]{user.getUsername(), user.isAdmin()});
             }
         }
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -165,10 +165,20 @@ public class EditUser extends javax.swing.JFrame {
     }
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
+        // this is just a hack
         int row = tblEditUser.getSelectedRow();
         int column = tblEditUser.getSelectedColumn();
         Object newvalue = dtm.getValueAt(row, column);
-        edit.setUsername(String.valueOf(newvalue));
+        String nvalue = String.valueOf(newvalue);
+        if("true".equals(nvalue) || "false".equals(nvalue)){
+            if("true".equals(nvalue)){
+                edit.makeAdmin(true);
+            }else{
+                edit.makeAdmin(false);
+            }
+        }else{
+            edit.setUsername(nvalue);
+        }        
         Serialize.save(Serialize.fileLocation);
     }//GEN-LAST:event_btnEditActionPerformed
 

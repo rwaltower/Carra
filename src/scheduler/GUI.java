@@ -252,7 +252,7 @@ public class GUI extends javax.swing.JFrame {
             for (Iterator<User> u = userInfo.keySet().iterator(); u.hasNext();) {
                 currentUser = u.next();
                 if (currentUser.getLogged()) {
-                    if (userInfo.get(currentUser) == false) {
+                    if (currentUser.isAdmin() == false) {
                         mnuUser.setVisible(false);
                     }
                 }
@@ -291,7 +291,7 @@ public class GUI extends javax.swing.JFrame {
                 User user = u.next();
                 if (user.equals(currentUser)) {
                     user.setPassword(newPassword);
-                    userInfo.put(user, userInfo.get(user));
+                    userInfo.put(user, user.isAdmin());
                     break;
                 }
             }
