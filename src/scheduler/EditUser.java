@@ -1,9 +1,9 @@
 package scheduler;
 
+import java.io.IOException;
 import java.util.Iterator;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -32,6 +32,7 @@ public class EditUser extends javax.swing.JFrame {
         SelectionListener listener = new SelectionListener(tblEditUser, this);
         tblEditUser.getSelectionModel().addListSelectionListener(listener);
         tblEditUser.getColumnModel().getSelectionModel().addListSelectionListener(listener);
+        listUsers();
     }
 
     /**
@@ -50,11 +51,12 @@ public class EditUser extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEditUser = new javax.swing.JTable();
         btnEdit = new javax.swing.JButton();
+        btnHome = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblRmvUser.setFont(new java.awt.Font("Trajan Pro", 1, 24)); // NOI18N
-        lblRmvUser.setText("EDIT User");
+        lblRmvUser.setText("Users");
 
         jLabel1.setText("Search");
 
@@ -90,6 +92,13 @@ public class EditUser extends javax.swing.JFrame {
             }
         });
 
+        btnHome.setText("Home");
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,22 +113,26 @@ public class EditUser extends javax.swing.JFrame {
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(33, 33, 33)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblRmvUser, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblRmvUser, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(108, 108, 108)))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addComponent(btnSearch))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnHome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEdit)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(4, 4, 4)
                 .addComponent(lblRmvUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -128,13 +141,22 @@ public class EditUser extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEdit)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEdit)
+                    .addComponent(btnHome))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void listUsers() {
+        dtm.setRowCount(0);
+        for (Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();) {
+            User user = u.next();
+            dtm.addRow(new Object[]{user.getUsername(), user.isAdmin()});
+        }
+    }
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         dtm.setRowCount(0);
@@ -170,17 +192,27 @@ public class EditUser extends javax.swing.JFrame {
         int column = tblEditUser.getSelectedColumn();
         Object newvalue = dtm.getValueAt(row, column);
         String nvalue = String.valueOf(newvalue);
-        if("true".equals(nvalue) || "false".equals(nvalue)){
-            if("true".equals(nvalue)){
+        if ("true".equals(nvalue) || "false".equals(nvalue)) {
+            if ("true".equals(nvalue)) {
                 edit.makeAdmin(true);
-            }else{
+            } else {
                 edit.makeAdmin(false);
             }
-        }else{
+        } else {
             edit.setUsername(nvalue);
-        }      
+        }
         Serialize.save(Serialize.fileLocation);
     }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        try {
+            new GUI().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(EditUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnHomeActionPerformed
 
     public static void run() {
         try {
@@ -205,6 +237,7 @@ public class EditUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnHome;
     private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
