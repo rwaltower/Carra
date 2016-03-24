@@ -5,16 +5,19 @@
  */
 package scheduler;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.print.PrinterException;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,11 +29,11 @@ public class GUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
-    final String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+    static final String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
         "Friday", "Saturday"};
     static int realYear, realMonth, realDay, currentYear, currentMonth;
     GregorianCalendar calendar;
-    DefaultTableModel CalendarTableModel = new DefaultTableModel(days, 5);
+    static DefaultTableModel CalendarTableModel = new DefaultTableModel(days, 6);
     final int CALENDAR_HEIGHT = 63;
     static HashMap<User, Boolean> userInfo = new HashMap<>();
     User currentUser;
@@ -65,6 +68,9 @@ public class GUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCalendar = new javax.swing.JTable();
         cmbYear = new javax.swing.JComboBox<>();
+        btnNext = new javax.swing.JButton();
+        btnPrev = new javax.swing.JButton();
+        lblMonth = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnPrintCalendar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -103,11 +109,37 @@ public class GUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblCalendar);
 
         cmbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
+        cmbYear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmbYearMouseClicked(evt);
+            }
+        });
         cmbYear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbYearActionPerformed(evt);
             }
         });
+
+        btnNext.setText(">>");
+        btnNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNextMouseClicked(evt);
+            }
+        });
+
+        btnPrev.setText("<<");
+        btnPrev.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPrevMouseClicked(evt);
+            }
+        });
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
+
+        lblMonth.setText("jLabel1");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -117,15 +149,24 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLogin))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnLogin))
+                            .addComponent(jScrollPane1))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cmbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnPrev)
+                        .addGap(366, 366, 366)
+                        .addComponent(lblMonth)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 464, Short.MAX_VALUE)
+                        .addComponent(btnNext)
+                        .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,7 +175,12 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnLogin)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPrev)
+                    .addComponent(btnNext)
+                    .addComponent(lblMonth))
+                .addGap(3, 3, 3)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -298,9 +344,10 @@ public class GUI extends javax.swing.JFrame {
         tblCalendar.setRowSelectionAllowed(true);
         tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        for(int i = realYear; i <= realYear+100; i++){
+        for(int i = realYear - 100; i <= realYear+100; i++){
             cmbYear.addItem(String.valueOf(i));
         }
+        refreshCalendar(realMonth, realYear);
         if (logged == true) {
             for (Iterator<User> u = userInfo.keySet().iterator(); u.hasNext();) {
                 currentUser = u.next();
@@ -370,6 +417,90 @@ public class GUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cmbYearActionPerformed
 
+    
+    public static void refreshCalendar(int month, int year){
+        String [] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        int numDays, startMonth;
+        
+        btnPrev.setEnabled(true); btnNext.setEnabled(true);
+        
+        if(month == 11 && year >= realYear+100) btnNext.setEnabled(false);
+        if(month == 0 && year <= realYear-100) btnPrev.setEnabled(false);
+        lblMonth.setText(months[month]);
+        cmbYear.setSelectedItem(String.valueOf(year));
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 7; j++){
+                CalendarTableModel.setValueAt(null, i, j);
+            }
+        }
+        
+        GregorianCalendar calendar = new GregorianCalendar(year, month, 1);
+        numDays = calendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+        startMonth = calendar.get(GregorianCalendar.DAY_OF_WEEK);
+        
+        for(int i = 1; i <= numDays; i++){
+            int row = (i+startMonth-2)/7;
+            int column = (i+startMonth-2)%7;
+            CalendarTableModel.setValueAt(i, row, column);
+            
+        }
+        tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
+    }
+    
+    static class tblCalendarRenderer extends DefaultTableCellRenderer{
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column){
+            super.getTableCellRendererComponent(table, value, selected, focused, row, column);
+            if(column == 0 || column == 6){ // weekend
+                setBackground(new Color(255, 220, 220)); 
+            }else{
+                setBackground(new Color(255,255,255));
+            }
+            if(value != null){
+                if(Integer.parseInt(value.toString()) == realDay && currentMonth == realMonth && currentYear == realYear){
+                    //current Day
+                    setBackground(new Color(220, 220, 255));
+                }
+            }
+            setBorder(null);
+            setForeground(Color.black);
+            return this;
+        }
+    }
+    private void btnPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrevMouseClicked
+        // TODO add your handling code here:
+        if(currentMonth == 0){
+            currentMonth = 11;
+            currentYear -=1;
+        }else{
+            currentMonth -=1;
+        }
+        refreshCalendar(currentMonth, currentYear);
+    }//GEN-LAST:event_btnPrevMouseClicked
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
+        // TODO add your handling code here:
+        if(currentMonth == 11){
+            currentMonth = 0;
+            currentYear += 1; // go to next year
+        }else{
+            currentMonth += 1; // just increment month
+        }
+        refreshCalendar(currentMonth, currentYear);
+    }//GEN-LAST:event_btnNextMouseClicked
+
+    private void cmbYearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbYearMouseClicked
+        // TODO add your handling code here:
+        if(cmbYear.getSelectedItem() != null){
+            String cYear = cmbYear.getSelectedItem().toString();
+            currentYear = Integer.parseInt(cYear);
+            refreshCalendar(currentMonth, currentYear);
+        }
+    }//GEN-LAST:event_cmbYearMouseClicked
+
     private void print(){
         try{
             tblCalendar.print();
@@ -415,8 +546,10 @@ public class GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private static javax.swing.JButton btnNext;
+    private static javax.swing.JButton btnPrev;
     private javax.swing.JButton btnPrintCalendar;
-    private javax.swing.JComboBox<String> cmbYear;
+    private static javax.swing.JComboBox<String> cmbYear;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -429,11 +562,12 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private static javax.swing.JLabel lblMonth;
     private javax.swing.JMenuItem mnuEdit;
     private javax.swing.JMenuItem mnuEditUser;
     private javax.swing.JMenu mnuMainEdit;
     private javax.swing.JMenuItem mnuServerLocation;
     private javax.swing.JMenu mnuUser;
-    private javax.swing.JTable tblCalendar;
+    private static javax.swing.JTable tblCalendar;
     // End of variables declaration//GEN-END:variables
 }
