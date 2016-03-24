@@ -150,6 +150,7 @@ public class EditUser extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     // Iterate through list of users and display username and if they are an admin or not
     private void listUsers() {
         dtm.setRowCount(0);
