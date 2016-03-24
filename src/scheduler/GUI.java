@@ -7,11 +7,14 @@ package scheduler;
 
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,6 +28,8 @@ public class GUI extends javax.swing.JFrame {
      */
     final String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
         "Friday", "Saturday"};
+    static int realYear, realMonth, realDay, currentYear, currentMonth;
+    GregorianCalendar calendar;
     DefaultTableModel CalendarTableModel = new DefaultTableModel(days, 5);
     final int CALENDAR_HEIGHT = 63;
     static HashMap<User, Boolean> userInfo = new HashMap<>();
@@ -33,6 +38,12 @@ public class GUI extends javax.swing.JFrame {
     static boolean logged = false;
 
     public GUI() throws IOException {
+        this.calendar = new GregorianCalendar();
+        realDay = calendar.get(GregorianCalendar.DAY_OF_MONTH);
+        realMonth = calendar.get(GregorianCalendar.MONTH);
+        realYear = calendar.get(GregorianCalendar.YEAR);
+        currentMonth = realMonth;
+        currentYear = realYear;
         initComponents();
         set();
     }
@@ -53,6 +64,7 @@ public class GUI extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCalendar = new javax.swing.JTable();
+        cmbYear = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         btnPrintCalendar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -90,17 +102,30 @@ public class GUI extends javax.swing.JFrame {
         tblCalendar.setRowHeight(CALENDAR_HEIGHT);
         jScrollPane1.setViewportView(tblCalendar);
 
+        cmbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
+        cmbYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbYearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogin)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLogin))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 982, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cmbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,8 +134,11 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnLogin)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 255, 255));
@@ -266,6 +294,13 @@ public class GUI extends javax.swing.JFrame {
     private void set() {
         tblCalendar.getTableHeader().setResizingAllowed(false);
         tblCalendar.getTableHeader().setReorderingAllowed(false);
+        tblCalendar.setColumnSelectionAllowed(true);
+        tblCalendar.setRowSelectionAllowed(true);
+        tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        for(int i = realYear - 100; i <= realYear+100; i++){
+            cmbYear.addItem(String.valueOf(i));
+        }
         if (logged == true) {
             for (Iterator<User> u = userInfo.keySet().iterator(); u.hasNext();) {
                 currentUser = u.next();
@@ -330,6 +365,11 @@ public class GUI extends javax.swing.JFrame {
         print();
     }//GEN-LAST:event_btnPrintCalendarActionPerformed
 
+    private void cmbYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbYearActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_cmbYearActionPerformed
+
     private void print(){
         try{
             tblCalendar.print();
@@ -376,6 +416,7 @@ public class GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnPrintCalendar;
+    private javax.swing.JComboBox<String> cmbYear;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
