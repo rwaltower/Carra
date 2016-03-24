@@ -163,9 +163,9 @@ public class EditUser extends javax.swing.JFrame {
         }
 
     }
+
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        // this is just a hack
         int row = tblEditUser.getSelectedRow();
         int column = tblEditUser.getSelectedColumn();
         Object newvalue = dtm.getValueAt(row, column);
@@ -178,7 +178,7 @@ public class EditUser extends javax.swing.JFrame {
             }
         }else{
             edit.setUsername(nvalue);
-        }        
+        }      
         Serialize.save(Serialize.fileLocation);
     }//GEN-LAST:event_btnEditActionPerformed
 
