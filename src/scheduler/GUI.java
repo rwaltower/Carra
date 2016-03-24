@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.Document;
 
 /**
  *
@@ -265,6 +264,8 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void set() {
+        tblCalendar.getTableHeader().setResizingAllowed(false);
+        tblCalendar.getTableHeader().setReorderingAllowed(false);
         if (logged == true) {
             for (Iterator<User> u = userInfo.keySet().iterator(); u.hasNext();) {
                 currentUser = u.next();
