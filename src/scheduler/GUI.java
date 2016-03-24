@@ -66,7 +66,12 @@ public class GUI extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCalendar = new javax.swing.JTable();
+        tblCalendar = new javax.swing.JTable(){
+            private static final long serialVersionUID = 1L;
+            public boolean isCellEditable(int row, int column){
+                return false;
+            };
+        };
         cmbYear = new javax.swing.JComboBox<>();
         btnNext = new javax.swing.JButton();
         btnPrev = new javax.swing.JButton();
@@ -339,6 +344,7 @@ public class GUI extends javax.swing.JFrame {
         tblCalendar.setRowSelectionAllowed(true);
         tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
+        
         for(int i = realYear - 100; i <= realYear+100; i++){
             cmbYear.addItem(String.valueOf(i));
         }
@@ -448,6 +454,7 @@ public class GUI extends javax.swing.JFrame {
     }
     
     static class tblCalendarRenderer extends DefaultTableCellRenderer{
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column){
             super.getTableCellRendererComponent(table, value, selected, focused, row, column);
             if(column == 0 || column == 6){ // weekend
@@ -460,6 +467,9 @@ public class GUI extends javax.swing.JFrame {
                     //current Day
                     setBackground(new Color(220, 220, 255));
                 }
+            }
+            if(selected){
+                setBackground(new Color(128, 128, 128));
             }
             setBorder(null);
             setForeground(Color.black);
