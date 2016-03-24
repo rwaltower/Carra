@@ -15,10 +15,12 @@ public class User implements Serializable, Cloneable{
     private String username;
     private String password;
     private boolean logged;
+    private boolean isAdmin;
     
     public User(String user, String pass){
         this.username = user;
         this.password = pass;
+        this.isAdmin = false;
     }
     
     public String getUsername(){
@@ -43,6 +45,14 @@ public class User implements Serializable, Cloneable{
     
     public boolean getLogged(){
         return logged;
+    }
+    
+    public void makeAdmin(boolean bool){
+        this.isAdmin = bool;
+    }
+    
+    public boolean isAdmin(){
+        return isAdmin;
     }
     
 }
