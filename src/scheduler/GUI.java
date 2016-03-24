@@ -76,7 +76,6 @@ public class GUI extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         mnuMainEdit = new javax.swing.JMenu();
         mnuEdit = new javax.swing.JMenuItem();
         mnuUser = new javax.swing.JMenu();
@@ -163,8 +162,8 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(btnPrev)
                         .addGap(366, 366, 366)
-                        .addComponent(lblMonth)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 464, Short.MAX_VALUE)
+                        .addComponent(lblMonth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(464, 464, 464)
                         .addComponent(btnNext)
                         .addContainerGap())))
         );
@@ -244,10 +243,6 @@ public class GUI extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Print");
-        jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
@@ -414,6 +409,11 @@ public class GUI extends javax.swing.JFrame {
 
     private void cmbYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbYearActionPerformed
         // TODO add your handling code here:
+        if(cmbYear.getSelectedItem() != null){
+            String cYear = cmbYear.getSelectedItem().toString();
+            currentYear = Integer.parseInt(cYear);
+            refreshCalendar(currentMonth, currentYear);
+        }
         
     }//GEN-LAST:event_cmbYearActionPerformed
 
@@ -494,11 +494,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void cmbYearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbYearMouseClicked
         // TODO add your handling code here:
-        if(cmbYear.getSelectedItem() != null){
-            String cYear = cmbYear.getSelectedItem().toString();
-            currentYear = Integer.parseInt(cYear);
-            refreshCalendar(currentMonth, currentYear);
-        }
+        
     }//GEN-LAST:event_cmbYearMouseClicked
 
     private void print(){
@@ -554,7 +550,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
