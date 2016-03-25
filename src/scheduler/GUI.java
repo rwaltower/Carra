@@ -441,8 +441,10 @@ public class GUI extends javax.swing.JFrame {
 
         btnPrev.setEnabled(true); btnNext.setEnabled(true);
 
+        // to avoid going over years we allow
         if(month == 11 && year >= _realYear+100) btnNext.setEnabled(false);
         if(month == 0 && year <= _realYear-100) btnPrev.setEnabled(false);
+        
         lblMonth.setText(months[month]);
         cmbYear.setSelectedItem(String.valueOf(year));
         for(int i = 0; i < 6; i++){
