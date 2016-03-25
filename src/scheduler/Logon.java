@@ -23,12 +23,12 @@ public class Logon extends javax.swing.JFrame {
      *
      * @throws java.io.IOException
      */
-    File testLog;
+    File _testLog;
 
     public Logon() throws IOException {
         initComponents();
-        testLog = new File(Serialize.fileLocation);
-        Serialize.Open(testLog);
+        _testLog = new File(Serialize.fileLocation);
+        Serialize.Open(_testLog);
     }
 
     /**
@@ -136,13 +136,13 @@ public class Logon extends javax.swing.JFrame {
         if ("".equals(username) || "".equals(password)) {
             JOptionPane.showMessageDialog(null, "Please Input a Username and Password", "Input Required", JOptionPane.ERROR_MESSAGE);
         } else {
-            for (Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();) {
+            for (Iterator<User> u = GUI._userInfo.keySet().iterator(); u.hasNext();) {
                 User user = u.next();
                 if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                     valid = true;
                     user.setLogged();
                     JOptionPane.showMessageDialog(null, "Successful");
-                    GUI.logged = true;
+                    GUI._logged = true;
                     try {
                         this.dispose();
                         new GUI().setVisible(true);

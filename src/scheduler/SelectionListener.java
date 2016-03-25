@@ -15,18 +15,18 @@ import javax.swing.event.ListSelectionListener;
  */
 class SelectionListener implements ListSelectionListener {
 
-    JTable table;
-    EditUser eu;
+    JTable _table;
+    EditUser _eu;
 
     SelectionListener(JTable table, EditUser eu) {
-        this.table = table;
-        this.eu = eu;
+        this._table = table;
+        this._eu = eu;
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if(e.getValueIsAdjusting()){
-            eu.getUser();
+            _eu.getUser();
         }
     }
 }

@@ -141,9 +141,9 @@ public class AddUsers extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Password did not match", "Password Mismatch", JOptionPane.ERROR_MESSAGE);
         } else {
             User newUser = new User(username, password);
-            GUI.userInfo.put(newUser, newUser.isAdmin());
+            GUI._userInfo.put(newUser, newUser.isAdmin());
             Serialize.save(Serialize.fileLocation);
-            JOptionPane.showMessageDialog(null, "User Added");
+            JOptionPane.showMessageDialog(null, "User "+newUser.getUsername()+ " Added");
             clearText();
         }
     }//GEN-LAST:event_btnCreateActionPerformed
