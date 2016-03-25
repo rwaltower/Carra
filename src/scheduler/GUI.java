@@ -111,6 +111,11 @@ public class GUI extends javax.swing.JFrame {
 
         tblCalendar.setModel(_CalendarTableModel);
         tblCalendar.setRowHeight(_CALENDAR_HEIGHT);
+        tblCalendar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCalendarMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCalendar);
 
         cmbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
@@ -344,7 +349,7 @@ public class GUI extends javax.swing.JFrame {
         tblCalendar.setColumnSelectionAllowed(true);
         tblCalendar.setRowSelectionAllowed(true);
         tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
+
         for(int i = _realYear - 100; i <= _realYear+100; i++){
             cmbYear.addItem(String.valueOf(i));
         }
@@ -360,7 +365,7 @@ public class GUI extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
@@ -421,16 +426,16 @@ public class GUI extends javax.swing.JFrame {
             _currentYear = Integer.parseInt(cYear);
             refreshCalendar(_currentMonth, _currentYear);
         }
-        
+
     }//GEN-LAST:event_cmbYearActionPerformed
 
-    
+
     public static void refreshCalendar(int month, int year){
         String [] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         int numDays, startMonth;
-        
+
         btnPrev.setEnabled(true); btnNext.setEnabled(true);
-        
+
         if(month == 11 && year >= _realYear+100) btnNext.setEnabled(false);
         if(month == 0 && year <= _realYear-100) btnPrev.setEnabled(false);
         lblMonth.setText(months[month]);
@@ -440,26 +445,26 @@ public class GUI extends javax.swing.JFrame {
                 _CalendarTableModel.setValueAt(null, i, j);
             }
         }
-        
+
         GregorianCalendar calendar = new GregorianCalendar(year, month, 1);
         numDays = calendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
         startMonth = calendar.get(GregorianCalendar.DAY_OF_WEEK);
-        
+
         for(int i = 1; i <= numDays; i++){
             int row = (i+startMonth-2)/7;
             int column = (i+startMonth-2)%7;
             _CalendarTableModel.setValueAt(i, row, column);
-            
+
         }
         tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
     }
-    
+
     static class tblCalendarRenderer extends DefaultTableCellRenderer{
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column){
             super.getTableCellRendererComponent(table, value, selected, focused, row, column);
             if(column == 0 || column == 6){ // weekend
-                setBackground(new Color(255, 220, 220)); 
+                setBackground(new Color(255, 220, 220));
             }else{
                 setBackground(new Color(255,255,255));
             }
@@ -510,8 +515,14 @@ public class GUI extends javax.swing.JFrame {
 
     private void cmbYearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbYearMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_cmbYearMouseClicked
+
+    private void tblCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCalendarMouseClicked
+        int row = tblCalendar.getSelectedRow();
+        int col = tblCalendar.getSelectedColumn();
+        new DateSelected(tblCalendar, row, col);
+    }//GEN-LAST:event_tblCalendarMouseClicked
 
     private void print(){
         try{
@@ -526,7 +537,7 @@ public class GUI extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
