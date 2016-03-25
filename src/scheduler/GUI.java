@@ -105,6 +105,11 @@ public class GUI extends javax.swing.JFrame {
 
         tblCalendar.setModel(CalendarTableModel);
         tblCalendar.setRowHeight(CALENDAR_HEIGHT);
+        tblCalendar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCalendarMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCalendar);
 
         cmbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
@@ -496,6 +501,12 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_cmbYearMouseClicked
+
+    private void tblCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCalendarMouseClicked
+        int row = tblCalendar.getSelectedRow();
+        int col = tblCalendar.getSelectedColumn();
+        new DateSelected(tblCalendar, row, col);
+    }//GEN-LAST:event_tblCalendarMouseClicked
 
     private void print(){
         try{
