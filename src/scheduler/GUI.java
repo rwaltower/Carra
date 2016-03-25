@@ -12,12 +12,15 @@ import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -173,7 +176,7 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(btnPrev)
                         .addGap(366, 366, 366)
-                        .addComponent(lblMonth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblMonth, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                         .addGap(464, 464, 464)
                         .addComponent(btnNext)
                         .addContainerGap())))
@@ -316,7 +319,9 @@ public class GUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -482,8 +487,12 @@ public class GUI extends javax.swing.JFrame {
                 //printing for debug purposes
                 System.out.println("date is "+_currentMonth+"-"+_eventday+"-"+ _currentYear);
             }
-            setBorder(null);
+            Color color = Color.black;
+            MatteBorder border = new MatteBorder(1,1,0,0,color);
+            setBorder(border);
             setForeground(Color.black);
+            setSize(table.getColumnModel().getColumn(column).getWidth(), 
+                    Short.MAX_VALUE);
             return this;
         }
     }
@@ -519,9 +528,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbYearMouseClicked
 
     private void tblCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCalendarMouseClicked
-        int row = tblCalendar.getSelectedRow();
-        int col = tblCalendar.getSelectedColumn();
-        new DateSelected(tblCalendar, row, col);
+
     }//GEN-LAST:event_tblCalendarMouseClicked
 
     private void print(){
