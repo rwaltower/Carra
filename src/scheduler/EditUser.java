@@ -180,6 +180,7 @@ public class EditUser extends javax.swing.JFrame {
             for (Iterator<User> u = GUI._userInfo.keySet().iterator(); u.hasNext();) {
                 _edit = u.next();
                 if (value.equals(_edit.getUsername())) {
+                    // print for debuggin
                     System.out.println("user is " + _edit.getUsername());
                     break;
                 }

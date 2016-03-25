@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -473,6 +474,7 @@ public class GUI extends javax.swing.JFrame {
                 Object dateChosen = _CalendarTableModel.getValueAt(tblCalendar.getSelectedRow(),
                     tblCalendar.getSelectedColumn());
                 _eventday = String.valueOf(dateChosen);
+                //printing for debug purposes
                 System.out.println("date is "+_currentMonth+"-"+_eventday+"-"+ _currentYear);
             }
             setBorder(null);
