@@ -20,15 +20,15 @@ public class EditUser extends javax.swing.JFrame {
     /**
      * Creates new form EditUser
      */
-    String header[] = new String[]{"Username", "IsAdmin"};
-    Object[][] data;
-    static DefaultTableModel dtm = new DefaultTableModel(0, 0);
-    static User edit;
+    String[] _header = new String[]{"Username", "IsAdmin"};
+    Object[][] _data;
+    static DefaultTableModel _dtm = new DefaultTableModel(0, 0);
+    static User _edit;
 
     public EditUser() {
         initComponents();
-        dtm.setColumnIdentifiers(header);
-        tblEditUser.setModel(dtm);
+        _dtm.setColumnIdentifiers(_header);
+        tblEditUser.setModel(_dtm);
         SelectionListener listener = new SelectionListener(tblEditUser, this);
         tblEditUser.getSelectionModel().addListSelectionListener(listener);
         tblEditUser.getColumnModel().getSelectionModel().addListSelectionListener(listener);
@@ -153,21 +153,21 @@ public class EditUser extends javax.swing.JFrame {
 
     // Iterate through list of users and display username and if they are an admin or not
     private void listUsers() {
-        dtm.setRowCount(0);
-        for (Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();) {
+        _dtm.setRowCount(0);
+        for (Iterator<User> u = GUI._userInfo.keySet().iterator(); u.hasNext();) {
             User user = u.next();
-            dtm.addRow(new Object[]{user.getUsername(), user.isAdmin()});
+            _dtm.addRow(new Object[]{user.getUsername(), user.isAdmin()});
         }
     }
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-        dtm.setRowCount(0);
+        _dtm.setRowCount(0);
         String username = txtSearch.getText();
-        for (Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();) {
+        for (Iterator<User> u = GUI._userInfo.keySet().iterator(); u.hasNext();) {
             User user = u.next();
             if (user.getUsername().equals(username)
                     || user.getUsername().startsWith(String.valueOf(username.charAt(0)))) {
-                dtm.addRow(new Object[]{user.getUsername(), user.isAdmin()});
+                _dtm.addRow(new Object[]{user.getUsername(), user.isAdmin()});
             }
         }
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -176,11 +176,11 @@ public class EditUser extends javax.swing.JFrame {
         int row = tblEditUser.getSelectedRow();
         int column = tblEditUser.getSelectedColumn();
         if (row >= 0 && column >= 0) {
-            Object value = dtm.getValueAt(row, column);
-            for (Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();) {
-                edit = u.next();
-                if (value.equals(edit.getUsername())) {
-                    System.out.println("user is " + edit.getUsername());
+            Object value = _dtm.getValueAt(row, column);
+            for (Iterator<User> u = GUI._userInfo.keySet().iterator(); u.hasNext();) {
+                _edit = u.next();
+                if (value.equals(_edit.getUsername())) {
+                    System.out.println("user is " + _edit.getUsername());
                     break;
                 }
             }
@@ -192,16 +192,16 @@ public class EditUser extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = tblEditUser.getSelectedRow();
         int column = tblEditUser.getSelectedColumn();
-        Object newvalue = dtm.getValueAt(row, column);
+        Object newvalue = _dtm.getValueAt(row, column);
         String nvalue = String.valueOf(newvalue);
         if ("true".equals(nvalue) || "false".equals(nvalue)) {
             if ("true".equals(nvalue)) {
-                edit.makeAdmin(true);
+                _edit.makeAdmin(true);
             } else {
-                edit.makeAdmin(false);
+                _edit.makeAdmin(false);
             }
         } else {
-            edit.setUsername(nvalue);
+            _edit.setUsername(nvalue);
         }
         Serialize.save(Serialize.fileLocation);
     }//GEN-LAST:event_btnEditActionPerformed

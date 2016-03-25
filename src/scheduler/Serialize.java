@@ -11,7 +11,7 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static scheduler.GUI.userInfo;
+import static scheduler.GUI._userInfo;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,7 +29,7 @@ public class Serialize {
     static void Open(File file) throws FileNotFoundException, IOException {
         try {
             try (FileInputStream fis = new FileInputStream(file); ObjectInputStream ois = new ObjectInputStream(fis)) {
-                GUI.userInfo = (HashMap) ois.readObject();
+                GUI._userInfo = (HashMap) ois.readObject();
                 
             }
         } catch (IOException | ClassNotFoundException ioe) {
@@ -39,7 +39,7 @@ public class Serialize {
     public static void save(String path) {
         try {
             try (FileOutputStream fileOut = new FileOutputStream(path); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-                out.writeObject(userInfo);
+                out.writeObject(_userInfo);
             }
 
         } catch (IOException ex) {

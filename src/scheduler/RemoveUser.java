@@ -17,14 +17,14 @@ import javax.swing.JOptionPane;
  */
 public class RemoveUser extends javax.swing.JFrame {
 
-    GUI gui;
+    GUI _gui;
     /**
      * Creates new form RemoveUser
      * @throws java.io.IOException
      */
     public RemoveUser() throws IOException {
         initComponents();
-        gui = new GUI();
+        _gui = new GUI();
     }
 
     /**
@@ -103,7 +103,7 @@ public class RemoveUser extends javax.swing.JFrame {
     private void btnSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchUserActionPerformed
         // TODO add your handling code here:
         String username = txtSearchUser.getText();
-        for(Iterator<User> u = GUI.userInfo.keySet().iterator(); u.hasNext();){
+        for(Iterator<User> u = GUI._userInfo.keySet().iterator(); u.hasNext();){
             User user = u.next();
             if(user.getUsername().equals(username)){
                 int reply = JOptionPane.showConfirmDialog(null, "Are you Sure?", "Delete "+user, JOptionPane.YES_NO_CANCEL_OPTION);

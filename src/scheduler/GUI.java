@@ -29,24 +29,24 @@ public class GUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
-    static final String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+    static final String[] _days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
         "Friday", "Saturday"};
-    static int realYear, realMonth, realDay, currentYear, currentMonth;
-    GregorianCalendar calendar;
-    static DefaultTableModel CalendarTableModel = new DefaultTableModel(days, 6);
-    final int CALENDAR_HEIGHT = 63;
-    static HashMap<User, Boolean> userInfo = new HashMap<>();
-    User currentUser;
-    //File testLog;
-    static boolean logged = false;
+    static int _realYear, _realMonth, _realDay, _currentYear, _currentMonth;
+    GregorianCalendar _calendar;
+    static DefaultTableModel _CalendarTableModel = new DefaultTableModel(_days, 6);
+    final int _CALENDAR_HEIGHT = 63;
+    static HashMap<User, Boolean> _userInfo = new HashMap<>();
+    static String _eventday;
+    User _currentUser;
+    static boolean _logged = false;
 
     public GUI() throws IOException {
-        this.calendar = new GregorianCalendar();
-        realDay = calendar.get(GregorianCalendar.DAY_OF_MONTH);
-        realMonth = calendar.get(GregorianCalendar.MONTH);
-        realYear = calendar.get(GregorianCalendar.YEAR);
-        currentMonth = realMonth;
-        currentYear = realYear;
+        this._calendar = new GregorianCalendar();
+        _realDay = _calendar.get(GregorianCalendar.DAY_OF_MONTH);
+        _realMonth = _calendar.get(GregorianCalendar.MONTH);
+        _realYear = _calendar.get(GregorianCalendar.YEAR);
+        _currentMonth = _realMonth;
+        _currentYear = _realYear;
         initComponents();
         set();
     }
@@ -108,8 +108,8 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        tblCalendar.setModel(CalendarTableModel);
-        tblCalendar.setRowHeight(CALENDAR_HEIGHT);
+        tblCalendar.setModel(_CalendarTableModel);
+        tblCalendar.setRowHeight(_CALENDAR_HEIGHT);
         jScrollPane1.setViewportView(tblCalendar);
 
         cmbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
@@ -337,33 +337,33 @@ public class GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void set() {
+    private  void set() {
         tblCalendar.getTableHeader().setResizingAllowed(false);
         tblCalendar.getTableHeader().setReorderingAllowed(false);
         tblCalendar.setColumnSelectionAllowed(true);
         tblCalendar.setRowSelectionAllowed(true);
         tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        
-        for(int i = realYear - 100; i <= realYear+100; i++){
+        for(int i = _realYear - 100; i <= _realYear+100; i++){
             cmbYear.addItem(String.valueOf(i));
         }
-        refreshCalendar(realMonth, realYear);
-        if (logged == true) {
-            for (Iterator<User> u = userInfo.keySet().iterator(); u.hasNext();) {
-                currentUser = u.next();
-                if (currentUser.getLogged()) {
-                    if (currentUser.isAdmin() == false) {
+        refreshCalendar(_realMonth, _realYear);
+        if (_logged == true) {
+            for (Iterator<User> u = _userInfo.keySet().iterator(); u.hasNext();) {
+                _currentUser = u.next();
+                if (_currentUser.getLogged()) {
+                    if (_currentUser.isAdmin() == false) {
                         mnuUser.setVisible(false);
                     }
                 }
             }
         }
     }
+    
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        if (logged == false) {
+        if (_logged == false) {
             //Logon.run();
         } else {
             System.exit(0);
@@ -387,12 +387,12 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         // Edit password here
         String newPassword = JOptionPane.showInputDialog("Enter new password here");
-        if (logged == true && !"".equals(newPassword)) {
-            for (Iterator<User> u = userInfo.keySet().iterator(); u.hasNext();) {
+        if (_logged == true && !"".equals(newPassword)) {
+            for (Iterator<User> u = _userInfo.keySet().iterator(); u.hasNext();) {
                 User user = u.next();
-                if (user.equals(currentUser)) {
+                if (user.equals(_currentUser)) {
                     user.setPassword(newPassword);
-                    userInfo.put(user, user.isAdmin());
+                    _userInfo.put(user, user.isAdmin());
                     break;
                 }
             }
@@ -417,8 +417,8 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(cmbYear.getSelectedItem() != null){
             String cYear = cmbYear.getSelectedItem().toString();
-            currentYear = Integer.parseInt(cYear);
-            refreshCalendar(currentMonth, currentYear);
+            _currentYear = Integer.parseInt(cYear);
+            refreshCalendar(_currentMonth, _currentYear);
         }
         
     }//GEN-LAST:event_cmbYearActionPerformed
@@ -430,13 +430,13 @@ public class GUI extends javax.swing.JFrame {
         
         btnPrev.setEnabled(true); btnNext.setEnabled(true);
         
-        if(month == 11 && year >= realYear+100) btnNext.setEnabled(false);
-        if(month == 0 && year <= realYear-100) btnPrev.setEnabled(false);
+        if(month == 11 && year >= _realYear+100) btnNext.setEnabled(false);
+        if(month == 0 && year <= _realYear-100) btnPrev.setEnabled(false);
         lblMonth.setText(months[month]);
         cmbYear.setSelectedItem(String.valueOf(year));
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 7; j++){
-                CalendarTableModel.setValueAt(null, i, j);
+                _CalendarTableModel.setValueAt(null, i, j);
             }
         }
         
@@ -447,7 +447,7 @@ public class GUI extends javax.swing.JFrame {
         for(int i = 1; i <= numDays; i++){
             int row = (i+startMonth-2)/7;
             int column = (i+startMonth-2)%7;
-            CalendarTableModel.setValueAt(i, row, column);
+            _CalendarTableModel.setValueAt(i, row, column);
             
         }
         tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
@@ -463,13 +463,17 @@ public class GUI extends javax.swing.JFrame {
                 setBackground(new Color(255,255,255));
             }
             if(value != null){
-                if(Integer.parseInt(value.toString()) == realDay && currentMonth == realMonth && currentYear == realYear){
+                if(Integer.parseInt(value.toString()) == _realDay && _currentMonth == _realMonth && _currentYear == _realYear){
                     //current Day
                     setBackground(new Color(220, 220, 255));
                 }
             }
             if(selected){
                 setBackground(new Color(128, 128, 128));
+                Object dateChosen = _CalendarTableModel.getValueAt(tblCalendar.getSelectedRow(),
+                    tblCalendar.getSelectedColumn());
+                _eventday = String.valueOf(dateChosen);
+                System.out.println("date is "+_currentMonth+"-"+_eventday+"-"+ _currentYear);
             }
             setBorder(null);
             setForeground(Color.black);
@@ -478,13 +482,13 @@ public class GUI extends javax.swing.JFrame {
     }
     private void btnPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrevMouseClicked
         // TODO add your handling code here:
-        if(currentMonth == 0){
-            currentMonth = 11;
-            currentYear -=1;
+        if(_currentMonth == 0){
+            _currentMonth = 11;
+            _currentYear -=1;
         }else{
-            currentMonth -=1;
+            _currentMonth -=1;
         }
-        refreshCalendar(currentMonth, currentYear);
+        refreshCalendar(_currentMonth, _currentYear);
     }//GEN-LAST:event_btnPrevMouseClicked
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
@@ -493,13 +497,13 @@ public class GUI extends javax.swing.JFrame {
 
     private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
         // TODO add your handling code here:
-        if(currentMonth == 11){
-            currentMonth = 0;
-            currentYear += 1; // go to next year
+        if(_currentMonth == 11){
+            _currentMonth = 0;
+            _currentYear += 1; // go to next year
         }else{
-            currentMonth += 1; // just increment month
+            _currentMonth += 1; // just increment month
         }
-        refreshCalendar(currentMonth, currentYear);
+        refreshCalendar(_currentMonth, _currentYear);
     }//GEN-LAST:event_btnNextMouseClicked
 
     private void cmbYearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbYearMouseClicked
