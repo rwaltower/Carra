@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -62,6 +63,7 @@ public class GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem4 = new javax.swing.JMenuItem();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jPanel1 = new javax.swing.JPanel();
         pnlBackground = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -80,22 +82,26 @@ public class GUI extends javax.swing.JFrame {
         btnNext = new javax.swing.JButton();
         btnPrev = new javax.swing.JButton();
         lblMonth = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        btnPrintCalendar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         mnuMainEdit = new javax.swing.JMenu();
-        mnuEdit = new javax.swing.JMenuItem();
         mnuUser = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        mnuEditUser = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        mnuAddUser = new javax.swing.JMenuItem();
+        mnuListEditUser = new javax.swing.JMenuItem();
+        mnuRemoveUser = new javax.swing.JMenuItem();
+        mnuEditPassword = new javax.swing.JMenuItem();
+        mnuCustomizeCalendar = new javax.swing.JMenuItem();
         mnuServerLocation = new javax.swing.JMenuItem();
 
         jMenuItem4.setText("jMenuItem4");
 
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         pnlBackground.setBackground(new java.awt.Color(204, 255, 204));
         pnlBackground.setForeground(new java.awt.Color(51, 51, 51));
@@ -163,11 +169,11 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBackgroundLayout.createSequentialGroup()
                         .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
                             .addGroup(pnlBackgroundLayout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnLogout))
-                            .addComponent(jScrollPane1))
+                                .addComponent(btnLogout)))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -176,7 +182,7 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
                         .addComponent(btnPrev)
                         .addGap(366, 366, 366)
-                        .addComponent(lblMonth, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                        .addComponent(lblMonth, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
                         .addGap(464, 464, 464)
                         .addComponent(btnNext)
                         .addContainerGap())))
@@ -188,7 +194,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnLogout)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPrev)
                     .addComponent(btnNext)
@@ -200,46 +206,17 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(7, 7, 7))
         );
 
-        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
-
-        btnPrintCalendar.setText("Print Calendar");
-        btnPrintCalendar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPrintCalendarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnPrintCalendar)
-                .addContainerGap(58, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(btnPrintCalendar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(177, 177, 177)
                 .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jMenu1.setText("File");
@@ -257,17 +234,18 @@ public class GUI extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("Print Calendar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         mnuMainEdit.setText("Edit");
-
-        mnuEdit.setText("Edit Password");
-        mnuEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuEditActionPerformed(evt);
-            }
-        });
-        mnuMainEdit.add(mnuEdit);
 
         mnuUser.setText("User");
         mnuUser.addActionListener(new java.awt.event.ActionListener() {
@@ -276,29 +254,45 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem5.setText("Add User");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        mnuAddUser.setText("Add User");
+        mnuAddUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                mnuAddUserActionPerformed(evt);
             }
         });
-        mnuUser.add(jMenuItem5);
+        mnuUser.add(mnuAddUser);
 
-        mnuEditUser.setText("List/Edit Users");
-        mnuEditUser.addActionListener(new java.awt.event.ActionListener() {
+        mnuListEditUser.setText("List/Edit Users");
+        mnuListEditUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuEditUserActionPerformed(evt);
+                mnuListEditUserActionPerformed(evt);
             }
         });
-        mnuUser.add(mnuEditUser);
+        mnuUser.add(mnuListEditUser);
 
-        jMenuItem6.setText("Remove User");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        mnuRemoveUser.setText("Remove User");
+        mnuRemoveUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                mnuRemoveUserActionPerformed(evt);
             }
         });
-        mnuUser.add(jMenuItem6);
+        mnuUser.add(mnuRemoveUser);
+
+        mnuEditPassword.setText("Edit Password");
+        mnuEditPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEditPasswordActionPerformed(evt);
+            }
+        });
+        mnuUser.add(mnuEditPassword);
+
+        mnuCustomizeCalendar.setText("Customize Calendar");
+        mnuCustomizeCalendar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCustomizeCalendarActionPerformed(evt);
+            }
+        });
+        mnuUser.add(mnuCustomizeCalendar);
 
         mnuMainEdit.add(mnuUser);
 
@@ -318,13 +312,11 @@ public class GUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -341,21 +333,21 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void mnuAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAddUserActionPerformed
         this.setVisible(false);
         AddUsers.run();
 
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_mnuAddUserActionPerformed
 
-    private  void set() {
+    private void set() {
         tblCalendar.getTableHeader().setResizingAllowed(false);
         tblCalendar.getTableHeader().setReorderingAllowed(false);
         tblCalendar.setColumnSelectionAllowed(true);
         tblCalendar.setRowSelectionAllowed(true);
         tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblCalendar.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        
-        for(int i = _realYear - 100; i <= _realYear+100; i++){
+
+        for (int i = _realYear - 100; i <= _realYear + 100; i++) {
             cmbYear.addItem(String.valueOf(i));
         }
         refreshCalendar(_realMonth, _realYear);
@@ -364,54 +356,44 @@ public class GUI extends javax.swing.JFrame {
                 _currentUser = u.next();
                 if (_currentUser.getLogged()) {
                     if (_currentUser.isAdmin() == false) {
-                        mnuUser.setVisible(false);
+                        hideNonAdmin();
+                    } else {
+
                     }
                 }
             }
         }
     }
 
+    private void hideNonAdmin() {
+        mnuAddUser.setVisible(false);
+        mnuListEditUser.setVisible(false);
+        mnuRemoveUser.setVisible(false);
+    }
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        
-            try {
-                new Logon().setVisible(true);
-            } catch (IOException ex) {
-                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
+
+        try {
+            new Logon().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void mnuRemoveUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRemoveUserActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         RemoveUser.run();
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_mnuRemoveUserActionPerformed
 
-    private void mnuEditUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEditUserActionPerformed
+    private void mnuListEditUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuListEditUserActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         EditUser.run();
-    }//GEN-LAST:event_mnuEditUserActionPerformed
-
-    private void mnuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEditActionPerformed
-        // TODO add your handling code here:
-        // Edit password here
-        String newPassword = JOptionPane.showInputDialog("Enter new password here");
-        if (_logged == true && !"".equals(newPassword)) {
-            for (Iterator<User> u = _userInfo.keySet().iterator(); u.hasNext();) {
-                User user = u.next();
-                if (user.equals(_currentUser)) {
-                    user.setPassword(newPassword);
-                    _userInfo.put(user, user.isAdmin());
-                    break;
-                }
-            }
-            Serialize.save(Serialize.fileLocation);
-        }
-    }//GEN-LAST:event_mnuEditActionPerformed
+    }//GEN-LAST:event_mnuListEditUserActionPerformed
 
     private void mnuUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuUserActionPerformed
         // TODO add your handling code here:
@@ -421,14 +403,9 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mnuServerLocationActionPerformed
 
-    private void btnPrintCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintCalendarActionPerformed
-        // TODO add your handling code here:
-        print();
-    }//GEN-LAST:event_btnPrintCalendarActionPerformed
-
     private void cmbYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbYearActionPerformed
         // TODO add your handling code here:
-        if(cmbYear.getSelectedItem() != null){
+        if (cmbYear.getSelectedItem() != null) {
             String cYear = cmbYear.getSelectedItem().toString();
             _currentYear = Integer.parseInt(cYear);
             refreshCalendar(_currentMonth, _currentYear);
@@ -436,21 +413,25 @@ public class GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cmbYearActionPerformed
 
-
-    public static void refreshCalendar(int month, int year){
-        String [] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    public static void refreshCalendar(int month, int year) {
+        String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         int numDays, startMonth;
 
-        btnPrev.setEnabled(true); btnNext.setEnabled(true);
+        btnPrev.setEnabled(true);
+        btnNext.setEnabled(true);
 
         // to avoid going over years we allow
-        if(month == 11 && year >= _realYear+100) btnNext.setEnabled(false);
-        if(month == 0 && year <= _realYear-100) btnPrev.setEnabled(false);
-        
+        if (month == 11 && year >= _realYear + 100) {
+            btnNext.setEnabled(false);
+        }
+        if (month == 0 && year <= _realYear - 100) {
+            btnPrev.setEnabled(false);
+        }
+
         lblMonth.setText(months[month]);
         cmbYear.setSelectedItem(String.valueOf(year));
-        for(int i = 0; i < 6; i++){
-            for(int j = 0; j < 7; j++){
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
                 _CalendarTableModel.setValueAt(null, i, j);
             }
         }
@@ -459,54 +440,55 @@ public class GUI extends javax.swing.JFrame {
         numDays = calendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
         startMonth = calendar.get(GregorianCalendar.DAY_OF_WEEK);
 
-        for(int i = 1; i <= numDays; i++){
-            int row = (i+startMonth-2)/7;
-            int column = (i+startMonth-2)%7;
+        for (int i = 1; i <= numDays; i++) {
+            int row = (i + startMonth - 2) / 7;
+            int column = (i + startMonth - 2) % 7;
             _CalendarTableModel.setValueAt(i, row, column);
 
         }
         tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
     }
 
-    static class tblCalendarRenderer extends DefaultTableCellRenderer{
+    static class tblCalendarRenderer extends DefaultTableCellRenderer {
+
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column){
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
             super.getTableCellRendererComponent(table, value, selected, focused, row, column);
-            if(column == 0 || column == 6){ // weekend
+            if (column == 0 || column == 6) { // weekend
                 setBackground(new Color(255, 220, 220));
-            }else{
-                setBackground(new Color(255,255,255));
+            } else {
+                setBackground(new Color(255, 255, 255));
             }
-            if(value != null){
-                if(Integer.parseInt(value.toString()) == _realDay && _currentMonth == _realMonth && _currentYear == _realYear){
+            if (value != null) {
+                if (Integer.parseInt(value.toString()) == _realDay && _currentMonth == _realMonth && _currentYear == _realYear) {
                     //current Day
                     setBackground(new Color(220, 220, 255));
                 }
             }
-            if(selected){
+            if (selected) {
                 setBackground(new Color(128, 128, 128));
                 Object dateChosen = _CalendarTableModel.getValueAt(tblCalendar.getSelectedRow(),
-                    tblCalendar.getSelectedColumn());
+                        tblCalendar.getSelectedColumn());
                 _eventday = String.valueOf(dateChosen);
                 //printing for debug purposes
-                System.out.println("date is "+_currentMonth+"-"+_eventday+"-"+ _currentYear);
+                System.out.println("date is " + _currentMonth + "-" + _eventday + "-" + _currentYear);
             }
             Color color = Color.black;
-            MatteBorder border = new MatteBorder(1,1,0,0,color);
+            MatteBorder border = new MatteBorder(1, 1, 0, 0, color);
             setBorder(border);
             setForeground(Color.black);
-            setSize(table.getColumnModel().getColumn(column).getWidth(), 
+            setSize(table.getColumnModel().getColumn(column).getWidth(),
                     Short.MAX_VALUE);
             return this;
         }
     }
     private void btnPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrevMouseClicked
         // TODO add your handling code here:
-        if(_currentMonth == 0){
+        if (_currentMonth == 0) {
             _currentMonth = 11;
-            _currentYear -=1;
-        }else{
-            _currentMonth -=1;
+            _currentYear -= 1;
+        } else {
+            _currentMonth -= 1;
         }
         refreshCalendar(_currentMonth, _currentYear);
     }//GEN-LAST:event_btnPrevMouseClicked
@@ -517,10 +499,10 @@ public class GUI extends javax.swing.JFrame {
 
     private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
         // TODO add your handling code here:
-        if(_currentMonth == 11){
+        if (_currentMonth == 11) {
             _currentMonth = 0;
             _currentYear += 1; // go to next year
-        }else{
+        } else {
             _currentMonth += 1; // just increment month
         }
         refreshCalendar(_currentMonth, _currentYear);
@@ -535,13 +517,43 @@ public class GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tblCalendarMouseClicked
 
-    private void print(){
-        try{
+    private void mnuEditPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEditPasswordActionPerformed
+        // TODO add your handling code here:
+        String newPassword = JOptionPane.showInputDialog("Enter new password here");
+        if (_logged == true && !"".equals(newPassword)) {
+            for (Iterator<User> u = _userInfo.keySet().iterator(); u.hasNext();) {
+                User user = u.next();
+                if (user.equals(_currentUser)) {
+                    user.setPassword(newPassword);
+                    _userInfo.put(user, user.isAdmin());
+                    break;
+                }
+            }
+            Serialize.save(Serialize.fileLocation);
+        }
+    }//GEN-LAST:event_mnuEditPasswordActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        print();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void mnuCustomizeCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCustomizeCalendarActionPerformed
+        // TODO add your handling code here:
+        Color c = JColorChooser.showDialog(null, "Select Color", pnlBackground.getBackground());
+        if(c != null){
+            pnlBackground.setBackground(c);
+        }
+    }//GEN-LAST:event_mnuCustomizeCalendarActionPerformed
+
+    private void print() {
+        try {
             tblCalendar.print();
         } catch (PrinterException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /**
      */
     public static void run() {
@@ -582,22 +594,23 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton btnLogout;
     private static javax.swing.JButton btnNext;
     private static javax.swing.JButton btnPrev;
-    private javax.swing.JButton btnPrintCalendar;
     private static javax.swing.JComboBox<String> cmbYear;
     private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JLabel lblMonth;
-    private javax.swing.JMenuItem mnuEdit;
-    private javax.swing.JMenuItem mnuEditUser;
+    private javax.swing.JMenuItem mnuAddUser;
+    private javax.swing.JMenuItem mnuCustomizeCalendar;
+    private javax.swing.JMenuItem mnuEditPassword;
+    private javax.swing.JMenuItem mnuListEditUser;
     private javax.swing.JMenu mnuMainEdit;
+    private javax.swing.JMenuItem mnuRemoveUser;
     private javax.swing.JMenuItem mnuServerLocation;
     private javax.swing.JMenu mnuUser;
     private javax.swing.JPanel pnlBackground;
