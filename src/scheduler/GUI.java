@@ -12,14 +12,11 @@ import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -66,15 +63,18 @@ public class GUI extends javax.swing.JFrame {
 
         jMenuItem4 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        pnlBackground = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        btnLogin = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCalendar = new javax.swing.JTable(){
             private static final long serialVersionUID = 1L;
             public boolean isCellEditable(int row, int column){
                 return false;
             };
+            public boolean getScrollableTracksViewportWidth(){
+                return getPreferredSize().width < getParent().getWidth();
+            }
         };
         cmbYear = new javax.swing.JComboBox<>();
         btnNext = new javax.swing.JButton();
@@ -97,18 +97,18 @@ public class GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel3.setBackground(new java.awt.Color(204, 255, 204));
-        jPanel3.setForeground(new java.awt.Color(51, 51, 51));
+        pnlBackground.setBackground(new java.awt.Color(204, 255, 204));
+        pnlBackground.setForeground(new java.awt.Color(51, 51, 51));
 
         jButton1.setBackground(new java.awt.Color(102, 204, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Create Event");
 
-        btnLogin.setText("Log Out");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        btnLogout.setText("Log Out");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                btnLogoutActionPerformed(evt);
             }
         });
 
@@ -154,42 +154,42 @@ public class GUI extends javax.swing.JFrame {
 
         lblMonth.setText("jLabel1");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlBackgroundLayout = new javax.swing.GroupLayout(pnlBackground);
+        pnlBackground.setLayout(pnlBackgroundLayout);
+        pnlBackgroundLayout.setHorizontalGroup(
+            pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBackgroundLayout.createSequentialGroup()
+                        .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlBackgroundLayout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnLogin))
+                                .addComponent(btnLogout))
                             .addComponent(jScrollPane1))
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cmbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
                         .addComponent(btnPrev)
                         .addGap(366, 366, 366)
-                        .addComponent(lblMonth, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                        .addComponent(lblMonth, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
                         .addGap(464, 464, 464)
                         .addComponent(btnNext)
                         .addContainerGap())))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        pnlBackgroundLayout.setVerticalGroup(
+            pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLogin)
+                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLogout)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPrev)
                     .addComponent(btnNext)
                     .addComponent(lblMonth))
@@ -234,12 +234,11 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -354,7 +353,8 @@ public class GUI extends javax.swing.JFrame {
         tblCalendar.setColumnSelectionAllowed(true);
         tblCalendar.setRowSelectionAllowed(true);
         tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+        tblCalendar.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
         for(int i = _realYear - 100; i <= _realYear+100; i++){
             cmbYear.addItem(String.valueOf(i));
         }
@@ -371,16 +371,18 @@ public class GUI extends javax.swing.JFrame {
         }
     }
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        if (_logged == false) {
-            //Logon.run();
-        } else {
-            System.exit(0);
-        }
+        
+            try {
+                new Logon().setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
 
-    }//GEN-LAST:event_btnLoginActionPerformed
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
@@ -577,7 +579,7 @@ public class GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnLogout;
     private static javax.swing.JButton btnNext;
     private static javax.swing.JButton btnPrev;
     private javax.swing.JButton btnPrintCalendar;
@@ -591,7 +593,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private static javax.swing.JLabel lblMonth;
     private javax.swing.JMenuItem mnuEdit;
@@ -599,6 +600,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JMenu mnuMainEdit;
     private javax.swing.JMenuItem mnuServerLocation;
     private javax.swing.JMenu mnuUser;
+    private javax.swing.JPanel pnlBackground;
     private static javax.swing.JTable tblCalendar;
     // End of variables declaration//GEN-END:variables
 }
