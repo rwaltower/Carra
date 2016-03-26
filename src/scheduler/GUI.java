@@ -369,6 +369,7 @@ public class GUI extends javax.swing.JFrame {
         mnuAddUser.setVisible(false);
         mnuListEditUser.setVisible(false);
         mnuRemoveUser.setVisible(false);
+        mnuServerLocation.setVisible(false);
     }
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
@@ -521,14 +522,8 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         String newPassword = JOptionPane.showInputDialog("Enter new password here");
         if (_logged == true && !"".equals(newPassword)) {
-            for (Iterator<User> u = _userInfo.keySet().iterator(); u.hasNext();) {
-                User user = u.next();
-                if (user.equals(_currentUser)) {
-                    user.setPassword(newPassword);
-                    _userInfo.put(user, user.isAdmin());
-                    break;
-                }
-            }
+            _currentUser.setPassword(newPassword);
+            _userInfo.put(_currentUser, _currentUser.isAdmin());
             Serialize.save(Serialize.fileLocation);
         }
     }//GEN-LAST:event_mnuEditPasswordActionPerformed
