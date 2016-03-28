@@ -36,8 +36,6 @@ public class CreateEvent extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDatePickerUtil1 = new org.jdatepicker.util.JDatePickerUtil();
-        jDatePickerUtil2 = new org.jdatepicker.util.JDatePickerUtil();
         jLabel1 = new javax.swing.JLabel();
         txtEventName = new javax.swing.JTextField();
         jdpDateSelector = new org.jdesktop.swingx.JXDatePicker();
@@ -132,14 +130,14 @@ public class CreateEvent extends javax.swing.JFrame {
         String date = eventDate.toString();
         String ndate = date.substring(date.indexOf(" ")+1);
         String Mon = ndate.substring(0,ndate.indexOf(" "));
-        
+
         String datePattern = "\\w{3} \\d{2}";
         Pattern dateP = Pattern.compile(datePattern);
         m = dateP.matcher(ndate);
         if(m.find()){
             ndate = m.group();
         }
-        
+
         for(int i = 0; i < months.length; i++){
             if(months[i] == null ? Mon == null : months[i].equals(Mon)){
                 if(ndate.contains(Mon)){
@@ -152,7 +150,7 @@ public class CreateEvent extends javax.swing.JFrame {
         System.out.println("date is "+ndate);
         // create new event here
         Event newEvent = new Event(eventName, ndate, time, creator);
-        
+
         ArrayList<Event> userEvents = GUI._userInfo.get(creator);
         if(userEvents == null){
             userEvents = new ArrayList<>();
@@ -170,7 +168,7 @@ public class CreateEvent extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -200,8 +198,6 @@ public class CreateEvent extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateEvent;
-    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
-    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
