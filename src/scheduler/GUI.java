@@ -84,8 +84,8 @@ public class GUI extends javax.swing.JFrame {
         lblMonth = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        mnuExit = new javax.swing.JMenuItem();
         mnuMainEdit = new javax.swing.JMenu();
         mnuUser = new javax.swing.JMenu();
         mnuAddUser = new javax.swing.JMenuItem();
@@ -103,6 +103,8 @@ public class GUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         pnlBackground.setBackground(new java.awt.Color(204, 255, 204));
         pnlBackground.setForeground(new java.awt.Color(51, 51, 51));
 
@@ -110,6 +112,11 @@ public class GUI extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Create Event");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnLogout.setText("Log Out");
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
@@ -181,9 +188,9 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(24, 24, 24))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
                         .addComponent(btnPrev)
-                        .addGap(366, 366, 366)
+                        .addGap(417, 417, 417)
                         .addComponent(lblMonth, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                        .addGap(464, 464, 464)
+                        .addGap(413, 413, 413)
                         .addComponent(btnNext)
                         .addContainerGap())))
         );
@@ -206,33 +213,9 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(7, 7, 7))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(177, 177, 177)
-                .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jPanel1.add(pnlBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, 0, -1, -1));
 
         jMenu1.setText("File");
-
-        jMenuItem1.setText("Exit");
-        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem1MouseClicked(evt);
-            }
-        });
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("Print Calendar");
@@ -242,6 +225,19 @@ public class GUI extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem2);
+
+        mnuExit.setText("Exit");
+        mnuExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnuExitMouseClicked(evt);
+            }
+        });
+        mnuExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuExitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuExit);
 
         jMenuBar1.add(jMenu1);
 
@@ -322,15 +318,15 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+    private void mnuExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuExitMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1MouseClicked
+    }//GEN-LAST:event_mnuExitMouseClicked
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void mnuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExitActionPerformed
         // TODO add your handling code here:
         Serialize.save(Serialize.fileLocation); // change this to your desktop just for testing
         System.exit(0);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_mnuExitActionPerformed
 
 
     private void mnuAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAddUserActionPerformed
@@ -369,11 +365,11 @@ public class GUI extends javax.swing.JFrame {
         mnuAddUser.setVisible(false);
         mnuListEditUser.setVisible(false);
         mnuRemoveUser.setVisible(false);
+        mnuServerLocation.setVisible(false);
     }
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-
+        this.dispose();
         try {
             new Logon().setVisible(true);
         } catch (IOException ex) {
@@ -428,7 +424,7 @@ public class GUI extends javax.swing.JFrame {
             btnPrev.setEnabled(false);
         }
 
-        lblMonth.setText(months[month]);
+        lblMonth.setText(months[month]+" "+_currentYear);
         cmbYear.setSelectedItem(String.valueOf(year));
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
@@ -444,8 +440,9 @@ public class GUI extends javax.swing.JFrame {
             int row = (i + startMonth - 2) / 7;
             int column = (i + startMonth - 2) % 7;
             _CalendarTableModel.setValueAt(i, row, column);
-
+            //tblCalendar.setValueAt(String.valueOf(i)+"\ndata", row, column);
         }
+        
         tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
     }
 
@@ -465,6 +462,7 @@ public class GUI extends javax.swing.JFrame {
                     setBackground(new Color(220, 220, 255));
                 }
             }
+
             if (selected) {
                 setBackground(new Color(128, 128, 128));
                 Object dateChosen = _CalendarTableModel.getValueAt(tblCalendar.getSelectedRow(),
@@ -473,6 +471,7 @@ public class GUI extends javax.swing.JFrame {
                 //printing for debug purposes
                 System.out.println("date is " + _currentMonth + "-" + _eventday + "-" + _currentYear);
             }
+            
             Color color = Color.black;
             MatteBorder border = new MatteBorder(1, 1, 0, 0, color);
             setBorder(border);
@@ -521,14 +520,8 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         String newPassword = JOptionPane.showInputDialog("Enter new password here");
         if (_logged == true && !"".equals(newPassword)) {
-            for (Iterator<User> u = _userInfo.keySet().iterator(); u.hasNext();) {
-                User user = u.next();
-                if (user.equals(_currentUser)) {
-                    user.setPassword(newPassword);
-                    _userInfo.put(user, user.isAdmin());
-                    break;
-                }
-            }
+            _currentUser.setPassword(newPassword);
+            _userInfo.put(_currentUser, _currentUser.isAdmin());
             Serialize.save(Serialize.fileLocation);
         }
     }//GEN-LAST:event_mnuEditPasswordActionPerformed
@@ -545,6 +538,11 @@ public class GUI extends javax.swing.JFrame {
             pnlBackground.setBackground(c);
         }
     }//GEN-LAST:event_mnuCustomizeCalendarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        CreateEvent.run();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void print() {
         try {
@@ -599,7 +597,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
@@ -608,6 +605,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuAddUser;
     private javax.swing.JMenuItem mnuCustomizeCalendar;
     private javax.swing.JMenuItem mnuEditPassword;
+    private javax.swing.JMenuItem mnuExit;
     private javax.swing.JMenuItem mnuListEditUser;
     private javax.swing.JMenu mnuMainEdit;
     private javax.swing.JMenuItem mnuRemoveUser;
