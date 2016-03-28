@@ -513,9 +513,24 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbYearMouseClicked
 
     private void tblCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCalendarMouseClicked
-
+        buildDateGUI();
+        jScrollPane1.setViewportView(dateGUI);
     }//GEN-LAST:event_tblCalendarMouseClicked
 
+    //build the GUI to be displayed when a particular date in the calendar is clicked
+    private void buildDateGUI() {
+        dateGUI = new javax.swing.JPanel();
+        javax.swing.JButton btnBack = new javax.swing.JButton("Back");
+        dateGUI.add(btnBack);
+        
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                jScrollPane1.setViewportView(tblCalendar);
+            }
+        });
+    }
+    
     private void mnuEditPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEditPasswordActionPerformed
         // TODO add your handling code here:
         String newPassword = JOptionPane.showInputDialog("Enter new password here");
@@ -614,4 +629,5 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel pnlBackground;
     private static javax.swing.JTable tblCalendar;
     // End of variables declaration//GEN-END:variables
+    private javax.swing.JPanel dateGUI;
 }
