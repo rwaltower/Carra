@@ -5,16 +5,18 @@
  */
 package scheduler;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 /**
  *
  * @author Ayomitunde
  */
-public class User implements Serializable, Cloneable{
+public class User implements Serializable{
     private String username;
     private String password;
     private String email;
+    private Color customColor; // this should be moved away from here
     private boolean logged;
     private boolean isAdmin;
     
@@ -36,8 +38,17 @@ public class User implements Serializable, Cloneable{
     public String getEmail(){
         return this.email;
     }
+    
+    public Color getCustomColor(){
+        return this.customColor;
+    }
+    
     public boolean getLogged(){
         return logged;
+    }
+    
+    public void setCustomecolor(Color color ){
+        this.customColor = color;
     }
     
     public void setUsername(String username){
