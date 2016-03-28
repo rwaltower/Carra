@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,9 +38,10 @@ public class GUI extends javax.swing.JFrame {
     GregorianCalendar _calendar;
     static DefaultTableModel _CalendarTableModel = new DefaultTableModel(_days, 6);
     final int _CALENDAR_HEIGHT = 63;
-    static HashMap<User, Boolean> _userInfo = new HashMap<>();
+    static HashMap<User, ArrayList<Event>> _userInfo = new HashMap<User, ArrayList<Event>>();
+    static ArrayList<Event> _allEvents = new ArrayList<Event>();
     static String _eventday;
-    User _currentUser;
+    static User _currentUser;
     static boolean _logged = false;
 
     public GUI() throws IOException {
@@ -82,6 +84,10 @@ public class GUI extends javax.swing.JFrame {
         btnNext = new javax.swing.JButton();
         btnPrev = new javax.swing.JButton();
         lblMonth = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -214,6 +220,38 @@ public class GUI extends javax.swing.JFrame {
         );
 
         jPanel1.add(pnlBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, 0, -1, -1));
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = {};
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        jLabel1.setText("Upcoming Events");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(350, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 580));
 
         jMenu1.setText("File");
 
@@ -359,6 +397,16 @@ public class GUI extends javax.swing.JFrame {
                 }
             }
         }
+
+        if (_currentUser != null) { // null check should be removed later
+            ArrayList<Event> currentuserEvents = _userInfo.get(_currentUser);
+            if (currentuserEvents != null) {
+                for (int i = 0; i < currentuserEvents.size(); i++) {
+                    Event e = currentuserEvents.get(i);
+                    System.out.println("event date is " + e.getEventDate());
+                }
+            }
+        }
     }
 
     private void hideNonAdmin() {
@@ -424,7 +472,7 @@ public class GUI extends javax.swing.JFrame {
             btnPrev.setEnabled(false);
         }
 
-        lblMonth.setText(months[month]+" "+_currentYear);
+        lblMonth.setText(months[month] + " " + _currentYear);
         cmbYear.setSelectedItem(String.valueOf(year));
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
@@ -442,7 +490,7 @@ public class GUI extends javax.swing.JFrame {
             _CalendarTableModel.setValueAt(i, row, column);
             //tblCalendar.setValueAt(String.valueOf(i)+"\ndata", row, column);
         }
-        
+
         tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
     }
 
@@ -471,7 +519,7 @@ public class GUI extends javax.swing.JFrame {
                 //printing for debug purposes
                 System.out.println("date is " + _currentMonth + "-" + _eventday + "-" + _currentYear);
             }
-            
+
             Color color = Color.black;
             MatteBorder border = new MatteBorder(1, 1, 0, 0, color);
             setBorder(border);
@@ -521,7 +569,7 @@ public class GUI extends javax.swing.JFrame {
         String newPassword = JOptionPane.showInputDialog("Enter new password here");
         if (_logged == true && !"".equals(newPassword)) {
             _currentUser.setPassword(newPassword);
-            _userInfo.put(_currentUser, _currentUser.isAdmin());
+            // _userInfo.put(_currentUser, _currentUser.isAdmin());
             Serialize.save(Serialize.fileLocation);
         }
     }//GEN-LAST:event_mnuEditPasswordActionPerformed
@@ -534,7 +582,7 @@ public class GUI extends javax.swing.JFrame {
     private void mnuCustomizeCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCustomizeCalendarActionPerformed
         // TODO add your handling code here:
         Color c = JColorChooser.showDialog(null, "Select Color", pnlBackground.getBackground());
-        if(c != null){
+        if (c != null) {
             pnlBackground.setBackground(c);
         }
     }//GEN-LAST:event_mnuCustomizeCalendarActionPerformed
@@ -595,12 +643,16 @@ public class GUI extends javax.swing.JFrame {
     private static javax.swing.JComboBox<String> cmbYear;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JLabel jLabel1;
+    private static javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private static javax.swing.JLabel lblMonth;
     private javax.swing.JMenuItem mnuAddUser;
     private javax.swing.JMenuItem mnuCustomizeCalendar;

@@ -5,19 +5,22 @@
  */
 package scheduler;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  *
  * @author Ayomitunde
  */
-public class Event {
+public class Event implements Serializable{
     
     private String _eventName;
-    private String _eventDate;
+    private Date _eventDate;
     private String _eventTime;
     private User _eventCreator;
     private boolean _rescheduled;
     
-    public Event(String eventName, String date, String time, User user){
+    public Event(String eventName, Date date, String time, User user){
         this._eventName = eventName;
         this._eventDate = date;
         this._eventTime = time;
@@ -25,7 +28,7 @@ public class Event {
         this._rescheduled = false;
     }
     
-    public void setDate(String date){
+    public void setDate(Date date){
         this._eventDate = date;
     }
     
@@ -37,15 +40,22 @@ public class Event {
         this._eventCreator = user;
     }
     
+    public void setEventName(String name){
+        this._eventName = name;
+    }
     public void setRescheduled(){
         this._rescheduled = true;
     }
-    public String getEventDate(){
+    public Date getEventDate(){
         return this._eventDate;
     }
     
     public String getEventTime(){
         return this._eventTime;
+    }
+    
+    public String getEventName(){
+        return this._eventName;
     }
     
     public User getEventCreator(){
