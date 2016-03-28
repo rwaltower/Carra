@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,7 +38,7 @@ public class GUI extends javax.swing.JFrame {
     GregorianCalendar _calendar;
     static DefaultTableModel _CalendarTableModel = new DefaultTableModel(_days, 6);
     final int _CALENDAR_HEIGHT = 63;
-    static HashMap<User, Boolean> _userInfo = new HashMap<>();
+    static HashMap<User, ArrayList> _userInfo = new HashMap<>();
     static String _eventday;
     User _currentUser;
     static boolean _logged = false;
@@ -359,6 +360,15 @@ public class GUI extends javax.swing.JFrame {
                 }
             }
         }
+        if (_currentUser != null) { // null check should be removed later
+            ArrayList<Event> currentuserEvents = _userInfo.get(_currentUser);
+            if (currentuserEvents != null) {
+                for (int i = 0; i < currentuserEvents.size(); i++) {
+                    Event e = currentuserEvents.get(i);
+                    System.out.println("event date is " + e.getEventDate());
+                }
+            }
+        }
     }
 
     private void hideNonAdmin() {
@@ -424,7 +434,7 @@ public class GUI extends javax.swing.JFrame {
             btnPrev.setEnabled(false);
         }
 
-        lblMonth.setText(months[month]+" "+_currentYear);
+        lblMonth.setText(months[month] +" "+_currentYear);
         cmbYear.setSelectedItem(String.valueOf(year));
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
@@ -442,7 +452,6 @@ public class GUI extends javax.swing.JFrame {
             _CalendarTableModel.setValueAt(i, row, column);
             //tblCalendar.setValueAt(String.valueOf(i)+"\ndata", row, column);
         }
-        
         tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
     }
 
@@ -536,7 +545,7 @@ public class GUI extends javax.swing.JFrame {
         String newPassword = JOptionPane.showInputDialog("Enter new password here");
         if (_logged == true && !"".equals(newPassword)) {
             _currentUser.setPassword(newPassword);
-            _userInfo.put(_currentUser, _currentUser.isAdmin());
+            //_userInfo.put(_currentUser, _currentUser.isAdmin());
             Serialize.save(Serialize.fileLocation);
         }
     }//GEN-LAST:event_mnuEditPasswordActionPerformed
