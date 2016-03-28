@@ -5,15 +5,39 @@
  */
 package scheduler;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ayomitunde
  */
-public class Event {
+public class Event implements Serializable{
+    
+    public static enum Priority
+    {
+        LOW ("low"),
+        MEDIUM ("medium"),
+        HIGH ("high");
+        
+        private final String name;
+        private Priority(String s){
+            name = s;
+        }
+        
+        public boolean equalsName(String prio){
+            return(prio == null) ? false : name.equals(prio);
+        }
+        
+        @Override
+        public String toString(){
+            return this.name;
+        }
+    };
     
     private String _eventName;
     private String _eventDate;
     private String _eventTime;
+    private String _eventPriority;
     private User _eventCreator;
     private boolean _rescheduled;
     
@@ -37,6 +61,13 @@ public class Event {
         this._eventCreator = user;
     }
     
+    public void setEventName(String name){
+        this._eventName = name;
+    }
+    
+    public void setPriorty(String p){
+        this._eventPriority = p;
+    }
     public void setRescheduled(){
         this._rescheduled = true;
     }
@@ -44,8 +75,15 @@ public class Event {
         return this._eventDate;
     }
     
+    public String getPriority(){
+        return this._eventPriority;
+    }
     public String getEventTime(){
         return this._eventTime;
+    }
+    
+    public String getEventName(){
+        return this._eventName;
     }
     
     public User getEventCreator(){
