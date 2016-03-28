@@ -5,7 +5,6 @@
  */
 package scheduler;
 
-import org.jdatepicker.util.*;
 
 /**
  *
@@ -29,8 +28,6 @@ public class CreateEvent extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDatePickerUtil1 = new org.jdatepicker.util.JDatePickerUtil();
-        jDatePickerUtil2 = new org.jdatepicker.util.JDatePickerUtil();
         jLabel1 = new javax.swing.JLabel();
         txtEventName = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -117,8 +114,6 @@ public class CreateEvent extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
-    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtEventName;
     // End of variables declaration//GEN-END:variables
