@@ -9,7 +9,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,10 +41,12 @@ public class GUI extends javax.swing.JFrame {
     GregorianCalendar _calendar;
     static DefaultTableModel _CalendarTableModel = new DefaultTableModel(_days, 6);
     final int _CALENDAR_HEIGHT = 63;
-    static HashMap<User, ArrayList<Event>> _userInfo = new HashMap<User, ArrayList<Event>>();
-    static ArrayList<Event> _allEvents = new ArrayList<Event>();
+    static HashMap<User, ArrayList<Event>> _userInfo = new HashMap<>();
+    static ArrayList<Event> _allEvents = new ArrayList<>();
     static String _eventday;
     static User _currentUser;
+    DateFormat _df = new SimpleDateFormat("M/dd/yyyy");
+    Date _currentDate = new Date();
     static boolean _logged = false;
 
     public GUI() throws IOException {
@@ -86,7 +91,7 @@ public class GUI extends javax.swing.JFrame {
         lblMonth = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jlUpcomingEvents = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -221,12 +226,12 @@ public class GUI extends javax.swing.JFrame {
 
         jPanel1.add(pnlBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, 0, -1, -1));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jlUpcomingEvents.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = {};
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(jlUpcomingEvents);
 
         jLabel1.setText("Upcoming Events");
 
@@ -398,12 +403,17 @@ public class GUI extends javax.swing.JFrame {
             }
         }
 
+        String currentDate = _df.format(_currentDate);
+        System.err.println(currentDate);
         if (_currentUser != null) { // null check should be removed later
             ArrayList<Event> currentuserEvents = _userInfo.get(_currentUser);
             if (currentuserEvents != null) {
                 for (int i = 0; i < currentuserEvents.size(); i++) {
                     Event e = currentuserEvents.get(i);
-                    System.out.println("event date is " + e.getEventDate());
+                    if(e.getEventDate().equals(currentDate)){
+                        System.out.println(e.getEventName()+" at "+e.getEventTime());
+                    }
+                    //System.out.println("event date is " + e.getEventDate());
                 }
             }
         }
@@ -644,7 +654,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
-    private static javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -653,6 +662,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private static javax.swing.JList<String> jlUpcomingEvents;
     private static javax.swing.JLabel lblMonth;
     private javax.swing.JMenuItem mnuAddUser;
     private javax.swing.JMenuItem mnuCustomizeCalendar;

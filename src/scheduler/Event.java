@@ -6,7 +6,6 @@
 package scheduler;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
@@ -15,12 +14,12 @@ import java.util.Date;
 public class Event implements Serializable{
     
     private String _eventName;
-    private Date _eventDate;
+    private String _eventDate;
     private String _eventTime;
     private User _eventCreator;
     private boolean _rescheduled;
     
-    public Event(String eventName, Date date, String time, User user){
+    public Event(String eventName, String date, String time, User user){
         this._eventName = eventName;
         this._eventDate = date;
         this._eventTime = time;
@@ -28,7 +27,7 @@ public class Event implements Serializable{
         this._rescheduled = false;
     }
     
-    public void setDate(Date date){
+    public void setDate(String date){
         this._eventDate = date;
     }
     
@@ -46,7 +45,7 @@ public class Event implements Serializable{
     public void setRescheduled(){
         this._rescheduled = true;
     }
-    public Date getEventDate(){
+    public String getEventDate(){
         return this._eventDate;
     }
     

@@ -19,6 +19,7 @@ import javax.swing.SpinnerDateModel;
  */
 public class CreateEvent extends javax.swing.JFrame {
 
+    public String [] months = new String[]{"null","Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     /**
      * Creates new form CreateEvent
      */
@@ -128,9 +129,30 @@ public class CreateEvent extends javax.swing.JFrame {
         if(m.find()){
             time = m.group();
         }
+        String date = eventDate.toString();
+        String ndate = date.substring(date.indexOf(" ")+1);
+        String Mon = ndate.substring(0,ndate.indexOf(" "));
+        
+        String datePattern = "\\w{3} \\d{2}";
+        Pattern dateP = Pattern.compile(datePattern);
+        m = dateP.matcher(ndate);
+        if(m.find()){
+            ndate = m.group();
+        }
+        
+        for(int i = 0; i < months.length; i++){
+            if(months[i] == null ? Mon == null : months[i].equals(Mon)){
+                if(ndate.contains(Mon)){
+                    ndate = ndate.replace(Mon, String.valueOf(i));
+                }
+            }
+        }
+        ndate += date.substring(date.lastIndexOf(" "));
+        ndate = ndate.replaceAll(" ", "/");
+        System.out.println("date is "+ndate);
         // create new event here
-        Event newEvent = new Event(eventName, eventDate, time, creator);
-        System.out.println("events "+eventName+" time "+time+" creator "+creator.getUsername());
+        Event newEvent = new Event(eventName, ndate, time, creator);
+        
         ArrayList<Event> userEvents = GUI._userInfo.get(creator);
         if(userEvents == null){
             userEvents = new ArrayList<>();
