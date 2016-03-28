@@ -13,9 +13,31 @@ import java.io.Serializable;
  */
 public class Event implements Serializable{
     
+    public static enum Priority
+    {
+        LOW ("low"),
+        MEDIUM ("medium"),
+        HIGH ("high");
+        
+        private final String name;
+        private Priority(String s){
+            name = s;
+        }
+        
+        public boolean equalsName(String prio){
+            return(prio == null) ? false : name.equals(prio);
+        }
+        
+        @Override
+        public String toString(){
+            return this.name;
+        }
+    };
+    
     private String _eventName;
     private String _eventDate;
     private String _eventTime;
+    private String _eventPriority;
     private User _eventCreator;
     private boolean _rescheduled;
     
@@ -42,6 +64,10 @@ public class Event implements Serializable{
     public void setEventName(String name){
         this._eventName = name;
     }
+    
+    public void setPriorty(String p){
+        this._eventPriority = p;
+    }
     public void setRescheduled(){
         this._rescheduled = true;
     }
@@ -49,6 +75,9 @@ public class Event implements Serializable{
         return this._eventDate;
     }
     
+    public String getPriority(){
+        return this._eventPriority;
+    }
     public String getEventTime(){
         return this._eventTime;
     }

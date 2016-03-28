@@ -21,9 +21,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CreateEvent extends javax.swing.JFrame {
 
-    public String [] months = new String[]{"null","Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-    static String[] users = {"Users"};
+    public String[] months = new String[]{"null", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    static final String[] users = {"Users"};
     static DefaultTableModel _userModel = new DefaultTableModel(users, 6);
+
     /**
      * Creates new form CreateEvent
      */
@@ -41,6 +42,8 @@ public class CreateEvent extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDatePickerUtil1 = new org.jdatepicker.util.JDatePickerUtil();
+        jDatePickerUtil2 = new org.jdatepicker.util.JDatePickerUtil();
         jLabel1 = new javax.swing.JLabel();
         txtEventName = new javax.swing.JTextField();
         jdpDateSelector = new org.jdesktop.swingx.JXDatePicker();
@@ -90,11 +93,11 @@ public class CreateEvent extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jdpDateSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jdpDateSelector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -110,12 +113,13 @@ public class CreateEvent extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(21, 21, 21)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cmbPriority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jspTimeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(cmbPriority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jspTimeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(18, 18, 18)
                         .addComponent(rbnDept)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -162,35 +166,35 @@ public class CreateEvent extends javax.swing.JFrame {
         String timePattern = "\\d{2}:\\d{2}:\\d{2}";
         Pattern timeP = Pattern.compile(timePattern);
         Matcher m = timeP.matcher(time);
-        if(m.find()){
+        if (m.find()) {
             time = m.group();
         }
         String date = eventDate.toString();
-        String ndate = date.substring(date.indexOf(" ")+1);
-        String Mon = ndate.substring(0,ndate.indexOf(" "));
+        String ndate = date.substring(date.indexOf(" ") + 1);
+        String Mon = ndate.substring(0, ndate.indexOf(" "));
 
         String datePattern = "\\w{3} \\d{2}";
         Pattern dateP = Pattern.compile(datePattern);
         m = dateP.matcher(ndate);
-        if(m.find()){
+        if (m.find()) {
             ndate = m.group();
         }
 
-        for(int i = 0; i < months.length; i++){
-            if(months[i] == null ? Mon == null : months[i].equals(Mon)){
-                if(ndate.contains(Mon)){
+        for (int i = 0; i < months.length; i++) {
+            if (months[i] == null ? Mon == null : months[i].equals(Mon)) {
+                if (ndate.contains(Mon)) {
                     ndate = ndate.replace(Mon, String.valueOf(i));
                 }
             }
         }
         ndate += date.substring(date.lastIndexOf(" "));
         ndate = ndate.replaceAll(" ", "/");
-        System.out.println("date is "+ndate);
+        System.out.println("date is " + ndate);
         // create new event here
         Event newEvent = new Event(eventName, ndate, time, creator);
 
         ArrayList<Event> userEvents = GUI._userInfo.get(creator);
-        if(userEvents == null){
+        if (userEvents == null) {
             userEvents = new ArrayList<>();
         }
         userEvents.add(newEvent);
@@ -199,17 +203,18 @@ public class CreateEvent extends javax.swing.JFrame {
         Serialize.save(Serialize.fileLocation);
     }//GEN-LAST:event_btnCreateEventActionPerformed
 
-    private void showUsers(){
+    private void showUsers() {
         int i = 0;
-        for(Iterator<User> u = GUI._userInfo.keySet().iterator(); u.hasNext();){
+        for (Iterator<User> u = GUI._userInfo.keySet().iterator(); u.hasNext();) {
             User user = u.next();
             _userModel.setValueAt(user.getUsername(), i, 0);
             i++;
         }
-        if(rbnDept.isSelected()){
+        if (rbnDept.isSelected()) {
 
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -246,6 +251,8 @@ public class CreateEvent extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateEvent;
     private static javax.swing.JComboBox<String> cmbPriority;
+    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
+    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
