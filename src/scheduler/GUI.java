@@ -44,8 +44,8 @@ public class GUI extends javax.swing.JFrame {
     static DefaultTableModel _CalendarTableModel = new DefaultTableModel(_days, 6);
     static DefaultTableModel _upcomingEventsModel = new DefaultTableModel(_upEvents, 3);
     final int _CALENDAR_HEIGHT = 63;
-    static HashMap<User, ArrayList<Event>> _userInfo = new HashMap<>();
     static ArrayList<Event> _allEvents = new ArrayList<>();
+    static HashMap<User, ArrayList> _userInfo = new HashMap<>();
     static String _eventday;
     static User _currentUser;
     DateFormat _df = new SimpleDateFormat("M/dd/yyyy");
@@ -422,6 +422,15 @@ public class GUI extends javax.swing.JFrame {
                 }
             }
         }
+        if (_currentUser != null) { // null check should be removed later
+            ArrayList<Event> currentuserEvents = _userInfo.get(_currentUser);
+            if (currentuserEvents != null) {
+                for (int i = 0; i < currentuserEvents.size(); i++) {
+                    Event e = currentuserEvents.get(i);
+                    System.out.println("event date is " + e.getEventDate());
+                }
+            }
+        }
     }
     
     private void hideNonAdmin() {
@@ -505,7 +514,6 @@ public class GUI extends javax.swing.JFrame {
             _CalendarTableModel.setValueAt(i, row, column);
             //tblCalendar.setValueAt(String.valueOf(i)+"\ndata", row, column);
         }
-        
         tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
     }
     
