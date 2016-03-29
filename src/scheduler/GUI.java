@@ -592,16 +592,35 @@ public class GUI extends javax.swing.JFrame {
     //build the GUI to be displayed when a particular date in the calendar is clicked
         private void buildDateGUI() {
         dateGUI = new javax.swing.JPanel();
+        javax.swing.JPanel upperPanel = new javax.swing.JPanel();
+        javax.swing.JPanel lowerPanel = new javax.swing.JPanel();
+        java.awt.GridLayout layout = new java.awt.GridLayout(0, 2);
+        lowerPanel.setLayout(layout);
+        
         javax.swing.JButton btnBack = new javax.swing.JButton("Back");
-        dateGUI.add(btnBack);
+        javax.swing.JButton btnCreateEvent = new javax.swing.JButton("Create Event");
+        
+        upperPanel.add(btnBack);
+        upperPanel.add(btnCreateEvent);
+        lowerPanel.add(new javax.swing.JLabel("Time"));
+        lowerPanel.add(new javax.swing.JLabel("Events"));
+        dateGUI.add(upperPanel);
+        dateGUI.add(lowerPanel);
         
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 jScrollPane1.setViewportView(tblCalendar);
-                }
-            });
-        }
+            }
+        });
+       
+        btnCreateEvent.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                jButton1ActionPerformed(e);
+            }
+        });
+    }
     
     private void mnuEditPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEditPasswordActionPerformed
         // TODO add your handling code here:
