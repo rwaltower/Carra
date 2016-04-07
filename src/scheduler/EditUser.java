@@ -152,7 +152,7 @@ public class EditUser extends javax.swing.JFrame {
 
 
     // Iterate through list of users and display username and if they are an admin or not
-    private void listUsers() {
+    public static void listUsers() {
         _dtm.setRowCount(0);
         for (Iterator<User> u = GUI._userInfo.keySet().iterator(); u.hasNext();) {
             User user = u.next();
@@ -203,6 +203,17 @@ public class EditUser extends javax.swing.JFrame {
             }
         } else {
             _edit.setUsername(nvalue);
+        }
+        GUI.editUser_Box.setVisible(true);
+        GUI.txtEditUser_Username.setText(_edit.getUsername());
+        GUI.txtEditUser_Email.setText(_edit.getEmail());
+        GUI.txtEditUser_Pwd.setText(_edit.getPassword());
+        GUI.txtEditUser_Pwd2.setText(_edit.getPassword());
+        if (_edit.isAdmin() == true) {
+            GUI.tglEditUser_Admin.setSelected(true);
+            
+        } else {
+            GUI.tglEditUser_Admin.setSelected(false);
         }
         Serialize.save(Serialize.fileLocation);
     }//GEN-LAST:event_btnEditActionPerformed

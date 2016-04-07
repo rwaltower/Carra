@@ -74,6 +74,22 @@ public class GUI extends javax.swing.JFrame {
 
         jMenuItem4 = new javax.swing.JMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        jDialog1 = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        editUser_Box = new javax.swing.JDialog();
+        txtEditUser_Username = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtEditUser_Pwd = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        txtEditUser_Pwd2 = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        tglEditUser_Admin = new javax.swing.JToggleButton();
+        btnEditUser_Cancel = new javax.swing.JButton();
+        btnEditUser_Save = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtEditUser_Email = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         pnlBackground = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -112,6 +128,160 @@ public class GUI extends javax.swing.JFrame {
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
+
+        jDialog1.setMinimumSize(new java.awt.Dimension(610, 300));
+        jDialog1.setSize(new java.awt.Dimension(610, 300));
+
+        jPanel3.setBackground(jPanel2.getBackground());
+        jPanel3.repaint();
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        jPanel4.setBackground(jPanel2.getBackground());
+        jPanel4.repaint();
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 504, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        editUser_Box.setSize(new java.awt.Dimension(400, 300));
+
+        txtEditUser_Username.setText(null);
+        txtEditUser_Username.setMinimumSize(new java.awt.Dimension(150, 28));
+        txtEditUser_Username.setSize(new java.awt.Dimension(150, 28));
+
+        jLabel1.setText("Username: ");
+
+        jLabel2.setText("New Password");
+
+        txtEditUser_Pwd.setMinimumSize(new java.awt.Dimension(102, 28));
+        txtEditUser_Pwd.setSize(new java.awt.Dimension(102, 28));
+
+        jLabel3.setText("Confirm new password: ");
+
+        txtEditUser_Pwd2.setMinimumSize(new java.awt.Dimension(102, 28));
+        txtEditUser_Pwd2.setSize(new java.awt.Dimension(102, 28));
+
+        jLabel4.setText("Edit User");
+
+        tglEditUser_Admin.setText("Is Admin");
+
+        btnEditUser_Cancel.setText("Cancel");
+        btnEditUser_Cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditUser_CancelActionPerformed(evt);
+            }
+        });
+
+        btnEditUser_Save.setText("Save");
+        btnEditUser_Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditUser_SaveActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Email:");
+
+        txtEditUser_Email.setText(null);
+
+        javax.swing.GroupLayout editUser_BoxLayout = new javax.swing.GroupLayout(editUser_Box.getContentPane());
+        editUser_Box.getContentPane().setLayout(editUser_BoxLayout);
+        editUser_BoxLayout.setHorizontalGroup(
+            editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editUser_BoxLayout.createSequentialGroup()
+                .addGap(161, 161, 161)
+                .addComponent(jLabel4)
+                .addContainerGap(183, Short.MAX_VALUE))
+            .addGroup(editUser_BoxLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(btnEditUser_Cancel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEditUser_Save)
+                .addGap(34, 34, 34))
+            .addGroup(editUser_BoxLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editUser_BoxLayout.createSequentialGroup()
+                        .addComponent(txtEditUser_Email)
+                        .addContainerGap())
+                    .addGroup(editUser_BoxLayout.createSequentialGroup()
+                        .addGroup(editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtEditUser_Pwd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtEditUser_Pwd2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtEditUser_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editUser_BoxLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tglEditUser_Admin)
+                .addGap(146, 146, 146))
+        );
+        editUser_BoxLayout.setVerticalGroup(
+            editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editUser_BoxLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditUser_Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(8, 8, 8)
+                .addGroup(editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtEditUser_Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtEditUser_Pwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtEditUser_Pwd2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(tglEditUser_Admin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(editUser_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditUser_Cancel)
+                    .addComponent(btnEditUser_Save))
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -645,12 +815,38 @@ public class GUI extends javax.swing.JFrame {
             _currentUser.setCustomecolor(c);
             Serialize.save(Serialize.fileLocation);
         }
+        jDialog1.setVisible(true);
     }//GEN-LAST:event_mnuCustomizeCalendarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         CreateEvent.run();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnEditUser_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditUser_CancelActionPerformed
+        editUser_Box.dispose();
+    }//GEN-LAST:event_btnEditUser_CancelActionPerformed
+
+    private void btnEditUser_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditUser_SaveActionPerformed
+        EditUser._edit.setUsername(txtEditUser_Username.getText());
+        EditUser._edit.setEmail(txtEditUser_Email.getText());
+        String password = txtEditUser_Pwd.getText();
+        String confPassword = txtEditUser_Pwd2.getText();
+        if (tglEditUser_Admin.isSelected() == true) {
+            EditUser._edit.makeAdmin(true);
+        } else {
+            EditUser._edit.makeAdmin(false);
+        }
+        if (!password.equals(confPassword)) {
+            JOptionPane.showMessageDialog(null, "Password did not match", "Password Mismatch", JOptionPane.ERROR_MESSAGE);
+        } else {
+        
+        Serialize.save(Serialize.fileLocation);
+        JOptionPane.showMessageDialog(null, "User "+EditUser._edit.getUsername()+ " has been edited. Changes saved.");
+        editUser_Box.dispose();
+        EditUser.listUsers();
+        }
+    }//GEN-LAST:event_btnEditUser_SaveActionPerformed
     
     private void print() {
         try {
@@ -697,18 +893,29 @@ public class GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnEditUser_Cancel;
+    public javax.swing.JButton btnEditUser_Save;
     private javax.swing.JButton btnLogout;
     private static javax.swing.JButton btnNext;
     private static javax.swing.JButton btnPrev;
     private static javax.swing.JComboBox<String> cmbYear;
+    public static javax.swing.JDialog editUser_Box;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JDialog jDialog1;
+    public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
+    public javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private static javax.swing.JLabel lblMonth;
@@ -724,6 +931,11 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel pnlBackground;
     private static javax.swing.JTable tblCalendar;
     private static javax.swing.JTable tblUpcomingEvents;
+    public static javax.swing.JToggleButton tglEditUser_Admin;
+    public static javax.swing.JTextField txtEditUser_Email;
+    public static javax.swing.JPasswordField txtEditUser_Pwd;
+    public static javax.swing.JPasswordField txtEditUser_Pwd2;
+    public static javax.swing.JTextField txtEditUser_Username;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JPanel dateGUI;
 }
